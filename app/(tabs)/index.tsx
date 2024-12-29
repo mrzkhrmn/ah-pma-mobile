@@ -1,11 +1,4 @@
-import {
-  FlatList,
-  Image,
-  Pressable,
-  SafeAreaView,
-  Text,
-  View,
-} from "react-native";
+import { Image, Pressable, SafeAreaView, Text, View } from "react-native";
 import icons from "@/constants/icons";
 import images from "@/constants/images";
 import ShareIcon from "../../assets/icons/ShareIcon";
