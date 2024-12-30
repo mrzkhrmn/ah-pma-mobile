@@ -44,7 +44,7 @@ const index = () => {
     }
   };
 
-  if (authUser) return <Redirect href={"/(tabs)"} />;
+  if (authUser) return <Redirect href={"/(tabs)/home"} />;
 
   return (
     <View className="flex-1">

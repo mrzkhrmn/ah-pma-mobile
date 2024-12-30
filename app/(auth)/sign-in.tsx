@@ -18,9 +18,26 @@ import {
   signInSuccess,
 } from "@/context/slices/authSlice";
 import { router } from "expo-router";
+import { Alert } from "react-native";
+
+const showAlert = () => {
+  Alert.alert(
+    "Kullanım Koşulları Reddedildi!",
+    "Devam etmek için kullanım koşullarını onaylayın",
+    [
+      {
+        text: "Geri",
+        style: "cancel",
+      },
+    ],
+    {
+      cancelable: true,
+    }
+  );
+};
 
 export default function index() {
-  const { authUser } = useSelector((state) => state.auth);
+  const { authUser, loading } = useSelector((state) => state.auth);
   const [checked, setChecked] = useState(false);
   const [signInData, setSignInData] = useState({
     username: "",
@@ -32,10 +49,10 @@ export default function index() {
     dispatch(signInStart());
     try {
       if (!checked) {
-        return console.log("Koşulları kabul etmelisiniz!");
+        return showAlert();
       }
       dispatch(signInSuccess(signInData));
-      router.replace("/(tabs)");
+      router.replace("/(tabs)/home");
       console.log(signInData, "anasayfaya yönlendir");
     } catch (error: any) {
       console.log(error.message);
@@ -95,6 +112,7 @@ export default function index() {
             <Pressable
               className="bg-[#1d3587] py-2 px-[20px] rounded-lg"
               onPress={handleSignIn}
+              disabled={loading}
             >
               <Text className="text-white text-base font-bold">Giriş</Text>
             </Pressable>

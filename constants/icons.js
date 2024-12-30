@@ -5,6 +5,8 @@ import offersInactiveIcon from "../assets/icons/offers-inactive.png";
 import operationsIcon from "../assets/icons/operations.png";
 import flterIcon from "../assets/icons/filter.png";
 import profileIcon from "../assets/icons/profile.png";
+import shareIcon from "../assets/icons/share.png";
+import backIcon from "../assets/icons/back.png";
 
 export default {
   appointmentInactiveIcon,
@@ -14,4 +16,6 @@ export default {
   operationsIcon,
   flterIcon,
   profileIcon,
+  shareIcon,
+  backIcon,
 };
