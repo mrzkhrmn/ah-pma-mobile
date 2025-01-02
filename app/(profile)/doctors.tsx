@@ -1,11 +1,12 @@
-import { View, Text, Image, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
+import { Image } from "expo-image";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
-import { router } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
-
+import LogoWithBackButton from "@/components/LogoWithBackButton";
+import { router } from "expo-router";
 const Doctors = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const doctorsData = [
@@ -47,23 +48,43 @@ const Doctors = () => {
     },
   ];
 
+  const handleGoBack = () => {
+    if (selectedDoctor === null) {
+      router.back();
+    } else {
+      setSelectedDoctor(null);
+    }
+  };
+
   return (
-    <SafeAreaView className=" items-center">
+    <SafeAreaView>
+      <View className="justify-center ">
+        <View className="absolute left-6   p-3">
+          <Pressable className="p-4" onPress={handleGoBack}>
+            <Image
+              source={icons.backIcon}
+              contentFit="cover"
+              style={{ width: 18, height: 18 }}
+            />
+          </Pressable>
+        </View>
+        <View className="items-center">
+          <Image source={images.logoImage} style={{ width: 95, height: 50 }} />
+        </View>
+      </View>
       {selectedDoctor === null ? (
         <>
-          <View className="absolute left-2  top-8 p-3">
-            <Pressable className="p-4" onPress={() => router.back()}>
-              <Image source={icons.backIcon} />
-            </Pressable>
-          </View>
-          <Image source={images.logoImage} />
-          <Text className="text-2xl text-center font-semibold mt-10">
+          <Text className="text-2xl text-center font-semibold my-4">
             Doktorlar
           </Text>
           <View className="max-w-[340px] items-center ml-1.5  flex flex-row flex-wrap   mx-auto gap-2">
             {doctorsData.map((doctor) => (
               <View key={doctor.id} className=" w-28">
-                <Image source={doctor.image} className="w-full" />
+                <Image
+                  style={{ width: 98, height: 153 }}
+                  source={doctor.image}
+                  contentFit="cover"
+                />
                 <Pressable onPress={() => setSelectedDoctor(doctor)}>
                   <View className="bg-[#1d3587] gap-2 py-4  px-2">
                     <Text className="text-white font-semibold text-center">
@@ -79,19 +100,16 @@ const Doctors = () => {
           </View>
         </>
       ) : (
-        <SafeAreaView className="w-[350px] items-center px-8 pb-20">
-          <View className="absolute left-6  top-8 p-3">
-            <Pressable className="p-4" onPress={() => setSelectedDoctor(null)}>
-              <Image source={icons.backIcon} />
-            </Pressable>
-          </View>
-          <Image source={images.logoImage} />
-          <ScrollView className="mt-4 bg-white w-full pb-32">
+        <SafeAreaView className=" pb-20">
+          <ScrollView
+            className="ml-3 bg-white  pb-32 w-[300px]"
+            contentContainerStyle={{ alignItems: "center" }}
+          >
             <View className="flex flex-row gap-2">
               <Image
                 source={selectedDoctor.image}
-                className="w-[88px]"
-                resizeMode="cover"
+                contentFit="cover"
+                style={{ width: 80, height: 130 }}
               />
               <View className="gap-5 flex justify w-[68%] py-2">
                 <Text className="text-[18px] font-semibold">

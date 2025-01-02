@@ -9,6 +9,7 @@ import steteskopImage from "../assets/images/steteskop.jpg";
 import aboutImage from "../assets/images/about-image.png";
 import femaleDoctorImage from "../assets/images/female-doctor.png";
 import operationImage from "../assets/images/operation.png";
+import receptionImage from "../assets/images/reception.png";
 
 export default {
   backgroundImage,
@@ -22,4 +23,5 @@ export default {
   aboutImage,
   femaleDoctorImage,
   operationImage,
+  receptionImage,
 };

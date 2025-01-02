@@ -2,7 +2,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  Image,
   TextInput,
   Pressable,
   Keyboard,
@@ -19,6 +18,7 @@ import {
 } from "@/context/slices/authSlice";
 import { router } from "expo-router";
 import { Alert } from "react-native";
+import { Image } from "expo-image";
 
 const showAlert = () => {
   Alert.alert(
@@ -66,7 +66,11 @@ export default function index() {
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View className="px-5 flex items-center mt-28  h-full gap-10">
-          <Image source={images.pmaLogo} />
+          <Image
+            source={images.pmaLogo}
+            contentFit="cover"
+            style={{ width: 135, height: 70 }}
+          />
           <View className="w-3/4 flex items-center gap-4">
             <View className=" flex items-center w-full">
               <Text className="text-start self-start">Kullanıcı Adı</Text>

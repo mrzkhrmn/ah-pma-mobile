@@ -7,6 +7,12 @@ import flterIcon from "../assets/icons/filter.png";
 import profileIcon from "../assets/icons/profile.png";
 import shareIcon from "../assets/icons/share.png";
 import backIcon from "../assets/icons/back.png";
+import saveIcon from "../assets/icons/save.png";
+import savedIcon from "../assets/icons/saved.png";
+import searchIcon from "../assets/icons/search.png";
+import addressIcon from "../assets/icons/address.png";
+import phoneIcon from "../assets/icons/phone.png";
+import mailIcon from "../assets/icons/mail.png";
 
 export default {
   appointmentInactiveIcon,
@@ -18,4 +24,10 @@ export default {
   profileIcon,
   shareIcon,
   backIcon,
+  saveIcon,
+  savedIcon,
+  searchIcon,
+  addressIcon,
+  mailIcon,
+  phoneIcon,
 };

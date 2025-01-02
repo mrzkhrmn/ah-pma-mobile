@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, Dimensions, Image } from "react-native";
+import { View, Text, ImageBackground, Dimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 const CarouselItem = ({ item }: { item: any }) => {

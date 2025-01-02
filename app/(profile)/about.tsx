@@ -1,30 +1,30 @@
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
-import { Image } from "react-native";
-import { Pressable, ScrollView } from "react-native-gesture-handler";
-import icons from "@/constants/icons";
-import { router } from "expo-router";
+import { ScrollView } from "react-native-gesture-handler";
+import LogoWithBackButton from "@/components/LogoWithBackButton";
+import { Image } from "expo-image";
 
 const About = () => {
   return (
     <SafeAreaView>
+      <LogoWithBackButton />
       <ScrollView contentContainerClassName="items-center " className=" px-2 ">
-        <View className="absolute left-6  top-8 p-3">
-          <Pressable className="p-4" onPress={() => router.back()}>
-            <Image source={icons.backIcon} />
-          </Pressable>
-        </View>
-        <Image source={images.logoImage} />
-        <Text className="text-2xl text-center font-semibold">Hakkımızda</Text>
+        <Text className="text-2xl text-center font-semibold mt-4">
+          Hakkımızda
+        </Text>
         <Text className="text-xl leading-6 mt-4">
           {" "}
           Amerikan Hastanesi bir asrı geride bırakırken, tecrübelerini en güncel
           teknolojik ve bilimsel yaklaşımlarla birleştirerek, sağlık alanındaki
           beklentilere yanıt vermeye devam ediyor.
         </Text>
-        <Image source={images.aboutImage} className="my-6" />
+        <Image
+          source={images.aboutImage}
+          contentFit="cover"
+          style={{ width: 220, height: 165, marginVertical: 20 }}
+        />
         <Text className="text-xl leading-6 ">
           Vehbi Koç Vakfı çatısı altında yer alan Amerikan Hastanesi, 100 yıllık
           bilgi birikimi ve tecrübesiyle en güncel teknolojileri bir araya

@@ -1,6 +1,5 @@
-import { View, Text, Pressable, Keyboard } from "react-native";
+import { View, Text, Pressable, Keyboard, Image } from "react-native";
 import React from "react";
-import { Image } from "react-native";
 import icons from "@/constants/icons";
 import images from "@/constants/images";
 import { router } from "expo-router";
@@ -10,22 +9,18 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
+import LogoWithBackButton from "@/components/LogoWithBackButton";
 
 const Info = () => {
   return (
-    <SafeAreaView className="items-center">
-      <View className="absolute left-2  top-8 p-3 ">
-        <Pressable className="p-4" onPress={() => router.back()}>
-          <Image source={icons.backIcon} />
-        </Pressable>
-      </View>
-      <Image source={images.logoImage} />
+    <SafeAreaView className="">
+      <LogoWithBackButton />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <Text className="text-2xl text-center font-semibold mt-10">
+        <Text className="text-2xl text-center font-semibold my-4">
           Bilgilerim
         </Text>
-        <View className="w-full px-12 mt-10 gap-4">
-          <View className=" flex items-center w-[230px]">
+        <View className="w-full px-12  gap-4">
+          <View className=" flex items-center w-full">
             <Text className="text-start self-start">Ad</Text>
             <TextInput
               id="name"

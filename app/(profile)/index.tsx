@@ -1,7 +1,6 @@
 import { Text, SafeAreaView, View, Pressable, ScrollView } from "react-native";
 import React from "react";
 import { Link, Stack, router } from "expo-router";
-import { Image } from "react-native";
 import images from "@/constants/images";
 import { useDispatch, useSelector } from "react-redux";
 import icons from "@/constants/icons";
@@ -10,6 +9,8 @@ import {
   logoutStart,
   logoutSuccess,
 } from "@/context/slices/authSlice";
+import { Image } from "expo-image";
+import LogoWithBackButton from "@/components/LogoWithBackButton";
 
 const index = () => {
   const { authUser } = useSelector((state) => state.auth);
@@ -37,15 +38,15 @@ const index = () => {
     },
     {
       text: "Kaydettiklerim",
-      link: "about",
+      link: "saves",
     },
     {
       text: "Sözleşmeler",
-      link: "about",
+      link: "agreements",
     },
     {
       text: "İletişim Bilgileri",
-      link: "about",
+      link: "contact-info",
     },
     {
       text: "Ayarlar",
@@ -89,46 +90,50 @@ const index = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 pt-4 items-center w-[250px] mx-auto">
-      <View className="absolute -left-8  top-8 p-3">
-        <Pressable className="p-4" onPress={() => router.back()}>
-          <Image source={icons.backIcon} />
-        </Pressable>
-      </View>
-      <Image source={images.logoImage} />
-      <ScrollView className="mt-6 flex  bg-white rounded-lg w-full  pt-4 pb-8">
-        <Text className=" text-3xl font-semibold text-center">Hoşgeldiniz</Text>
-        <Text className="text-center text-xl mt-1 font-semibold">
-          Sn. {authUser.username}
-        </Text>
-        <View className="justify-start items-start w-full pl-5">
-          {profileLinksData.map((data, index) => (
-            <View className="w-full" key={index}>
-              <View className="flex-row items-center gap-4  mt-4 w-full border-dashed border-b  border-black/10">
-                <Image source={icons.flterIcon} className="w-5 h-5" />
-                <Link
-                  href={`/${data.link}`}
-                  className=" flex items-center text-2xl font-light w-full"
-                >
-                  {data.text}
-                </Link>
+    <SafeAreaView>
+      <LogoWithBackButton />
+      <View className="pb-32 pt-4   mx-auto">
+        <ScrollView className="mt-6 flex  bg-white rounded-lg w-full  pt-4 pb-8">
+          <Text className=" text-3xl font-semibold text-center">
+            Hoşgeldiniz
+          </Text>
+          <Text className="text-center text-xl mt-1 font-semibold">
+            Sn. {authUser.username}
+          </Text>
+          <View className="w-[250px]">
+            <View className="justify-start items-start w-full pl-5">
+              {profileLinksData.map((data, index) => (
+                <View className="w-full" key={index}>
+                  <View className="flex-row items-center gap-4  mt-4 w-full border-dashed border-b  border-black/10">
+                    <Image
+                      source={icons.flterIcon}
+                      style={{ width: 20, height: 20 }}
+                    />
+                    <Link
+                      href={`/${data.link}`}
+                      className=" flex items-center text-2xl font-light w-full"
+                    >
+                      {data.text}
+                    </Link>
+                  </View>
+                  <View className="h-.5 w-full border border-black border-dashed mt-1"></View>
+                </View>
+              ))}
+              <View className="w-full">
+                <View className="flex-row items-center gap-4  mt-4 w-full border-dashed border-b  border-black/10">
+                  <Image source={icons.flterIcon} className="w-5 h-5" />
+                  <Pressable onPress={handleLogout} className="w-full">
+                    <Text className=" flex items-center text-2xl font-light">
+                      Çıkış Yap
+                    </Text>
+                  </Pressable>
+                </View>
+                <View className="h-.5 w-full border border-black border-dashed mt-1"></View>
               </View>
-              <View className="h-.5 w-full border border-black border-dashed mt-1"></View>
             </View>
-          ))}
-          <View className="w-full">
-            <View className="flex-row items-center gap-4  mt-4 w-full border-dashed border-b  border-black/10">
-              <Image source={icons.flterIcon} className="w-5 h-5" />
-              <Pressable onPress={handleLogout} className="w-full">
-                <Text className=" flex items-center text-2xl font-light">
-                  Çıkış Yap
-                </Text>
-              </Pressable>
-            </View>
-            <View className="h-.5 w-full border border-black border-dashed mt-1"></View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

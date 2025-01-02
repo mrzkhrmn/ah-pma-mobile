@@ -1,7 +1,8 @@
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import icons from "@/constants/icons.js";
+import { Image } from "expo-image";
 
 const TabIcon = ({
   focused,
@@ -20,7 +21,8 @@ const TabIcon = ({
     <Image
       source={icon}
       tintColor={focused ? "#1d3587" : "black"}
-      resizeMode="contain"
+      style={{ width: 22, height: 22 }}
+      contentFit="contain"
     />
     <Text
       className={`${
@@ -80,7 +82,8 @@ const TabsLayout = () => {
                 <Image
                   source={icons.operationsIcon}
                   tintColor={"white"}
-                  resizeMode="contain"
+                  style={{ width: 26, height: 26 }}
+                  contentFit="contain"
                 />
               </View>
               <Text
