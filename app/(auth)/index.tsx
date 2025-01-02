@@ -37,7 +37,6 @@ const index = () => {
       const contentOffsetX = event.nativeEvent.contentOffset.x;
       const contentWidth = event.nativeEvent.contentSize.width / 2;
 
-      // Eğer kullanıcı, son öğeye gelmişse ve kaydırma işlemine devam ediyorsa
       if (contentOffsetX >= contentWidth) {
         router.replace("/sign-in");
       }

@@ -32,7 +32,7 @@ const HomeCard = ({ item }: { item: any }) => {
       />
       <View className="bg-white w-full  absolute bottom-0 left-0 px-4 py-2">
         <View className="flex flex-row   justify-between ">
-          <Text className="text-[16px]">{item.title}</Text>
+          <Text className="text-[16px] font-inter">{item.title}</Text>
           <View className="flex flex-row gap-2">
             <Pressable onPress={handlePressSave}>
               {savedOperations?.length !== null &&
@@ -59,7 +59,7 @@ const HomeCard = ({ item }: { item: any }) => {
             </Pressable>
           </View>
         </View>
-        <Text className="text-[12px] mt-4">{item.text}</Text>
+        <Text className="text-[12px] text-inter mt-4">{item.text}</Text>
       </View>
     </View>
   );

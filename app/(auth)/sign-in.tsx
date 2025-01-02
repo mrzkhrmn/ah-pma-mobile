@@ -47,20 +47,24 @@ export default function index() {
 
   const handleSignIn = (e: any) => {
     dispatch(signInStart());
+    console.log(authUser);
     try {
       if (!checked) {
+        dispatch(signInFailure("Şartlar kabul edilmedi"));
         return showAlert();
       }
-      dispatch(signInSuccess(signInData));
-      router.replace("/(tabs)/home");
-      console.log(signInData, "anasayfaya yönlendir");
+      setTimeout(() => {
+        dispatch(signInSuccess(signInData));
+        router.replace("/(tabs)/home");
+        console.log(signInData, "anasayfaya yönlendir");
+      }, 1000);
     } catch (error: any) {
       console.log(error.message);
       dispatch(signInFailure(error.message));
     }
   };
 
-  console.log(authUser);
+  console.log(loading);
 
   return (
     <SafeAreaView>
@@ -114,9 +118,11 @@ export default function index() {
               </Text>
             </View>
             <Pressable
-              className="bg-[#1d3587] py-2 px-[20px] rounded-lg"
-              onPress={handleSignIn}
               disabled={loading}
+              className={`bg-[#1d3587] py-2 px-[20px] rounded-lg ${
+                loading ? "opacity-20" : "opacity-100"
+              }`}
+              onPress={handleSignIn}
             >
               <Text className="text-white text-base font-bold">Giriş</Text>
             </Pressable>
