@@ -10,6 +10,7 @@ import aboutImage from "../assets/images/about-image.png";
 import femaleDoctorImage from "../assets/images/female-doctor.png";
 import operationImage from "../assets/images/operation.png";
 import receptionImage from "../assets/images/reception.png";
+import noseOfferImage from "../assets/images/nose-offer.jpg";
 
 export default {
   backgroundImage,
@@ -24,4 +25,5 @@ export default {
   femaleDoctorImage,
   operationImage,
   receptionImage,
+  noseOfferImage,
 };

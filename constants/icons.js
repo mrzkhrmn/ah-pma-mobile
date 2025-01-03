@@ -14,6 +14,7 @@ import addressIcon from "../assets/icons/address.png";
 import phoneIcon from "../assets/icons/phone.png";
 import mailIcon from "../assets/icons/mail.png";
 import worldIcon from "../assets/icons/world.png";
+import galleryAddIcon from "../assets/icons/gallery-add.png";
 
 export default {
   appointmentInactiveIcon,
@@ -32,4 +33,5 @@ export default {
   mailIcon,
   phoneIcon,
   worldIcon,
+  galleryAddIcon,
 };

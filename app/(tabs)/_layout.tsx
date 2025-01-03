@@ -3,6 +3,7 @@ import React from "react";
 import { Tabs } from "expo-router";
 import icons from "@/constants/icons.js";
 import { Image } from "expo-image";
+import { useTranslation } from "react-i18next";
 
 const TabIcon = ({
   focused,
@@ -35,6 +36,7 @@ const TabIcon = ({
 );
 
 const TabsLayout = () => {
+  const { t } = useTranslation();
   return (
     <Tabs
       screenOptions={{
@@ -51,7 +53,7 @@ const TabsLayout = () => {
               containerMargin="mt-5"
               focused={focused}
               icon={icons.homeInactiveIcon}
-              title={"Ana Sayfa"}
+              title={t("tabs.home")}
             />
           ),
         }}
@@ -66,7 +68,7 @@ const TabsLayout = () => {
               containerMargin="mt-5"
               focused={focused}
               icon={icons.offersInactiveIcon}
-              title={"Teklifler"}
+              title={t("tabs.offers")}
             />
           ),
         }}
@@ -93,7 +95,7 @@ const TabsLayout = () => {
                     : "text-black font-[400]"
                 } text-xs w-full text-center`}
               >
-                {"Operations"}
+                {t("tabs.operations")}
               </Text>
             </View>
           ),
@@ -109,7 +111,7 @@ const TabsLayout = () => {
               containerMargin="mt-[15px]"
               focused={focused}
               icon={icons.chatInactiveIcon}
-              title={"Sohbet"}
+              title={t("tabs.chat")}
             />
           ),
         }}
@@ -124,7 +126,7 @@ const TabsLayout = () => {
               containerMargin="mt-[18px]"
               focused={focused}
               icon={icons.appointmentInactiveIcon}
-              title={"Randevular"}
+              title={t("tabs.dates")}
             />
           ),
         }}

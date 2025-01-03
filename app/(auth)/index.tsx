@@ -18,7 +18,7 @@ const index = () => {
   const viewableItemsChanged = useRef(({ viewableItems }: any) => {
     const currentItemIndex = viewableItems[0]?.index;
     setCurrentIndex(currentItemIndex);
-    setIsLastItem(currentItemIndex === carouselData.length - 1); // Son öğeye gelindi mi kontrolü
+    setIsLastItem(currentItemIndex === carouselData.length - 1);
   }).current;
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;

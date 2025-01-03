@@ -6,6 +6,7 @@ const initialState = {
   agreements: [],
   loading: false,
   error: null,
+  language: "",
 };
 
 const authSlice = createSlice({
@@ -84,6 +85,9 @@ const authSlice = createSlice({
       state.savedOperations = null;
       state.error = action.payload;
     },
+    setLanguage: (state, action) => {
+      state.language = action.payload;
+    },
   },
 });
 
@@ -100,6 +104,7 @@ export const {
   addAgreementStart,
   addAgreementSuccess,
   addAgreementFailure,
+  setLanguage,
 } = authSlice.actions;
 
 export default authSlice.reducer;

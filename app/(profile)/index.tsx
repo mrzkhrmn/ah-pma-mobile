@@ -12,46 +12,48 @@ import {
 import { Image } from "expo-image";
 import LogoWithBackButton from "@/components/LogoWithBackButton";
 import Modal from "react-native-modal";
+import { useTranslation } from "react-i18next";
 
 const index = () => {
+  const { t } = useTranslation();
   const { authUser } = useSelector((state) => state.auth);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const profileLinksData = [
     {
-      text: "Hakkımızda",
+      text: "profile.about",
       link: "about",
     },
     {
-      text: "Doktorlarımız",
+      text: "profile.doctors",
       link: "doctors",
     },
     {
-      text: "Operasyonlar",
+      text: "profile.operations",
       link: "operations",
     },
     {
-      text: "Bilgilerim",
+      text: "profile.info",
       link: "info",
     },
     {
-      text: "Bildirimler",
+      text: "profile.notifications",
       link: "about",
     },
     {
-      text: "Kaydettiklerim",
+      text: "profile.saves",
       link: "saves",
     },
     {
-      text: "Sözleşmeler",
+      text: "profile.agreements",
       link: "agreements",
     },
     {
-      text: "İletişim Bilgileri",
+      text: "profile.contactInfo",
       link: "contact-info",
     },
     {
-      text: "Ayarlar",
+      text: "profile.settings",
       link: "settings",
     },
   ];
@@ -76,7 +78,7 @@ const index = () => {
       <View className="pb-32 pt-4   mx-auto">
         <ScrollView className="mt-6 flex  bg-white rounded-lg w-full  pt-4 pb-8">
           <Text className=" text-3xl font-inter-semibold text-center">
-            Hoşgeldiniz
+            {t("profile.title")}
           </Text>
           <Text className="text-center text-xl mt-1 font-semibold">
             Sn. {authUser.username}
@@ -94,7 +96,7 @@ const index = () => {
                       href={`/${data.link}`}
                       className=" flex items-center text-2xl font-light w-full"
                     >
-                      {data.text}
+                      {t(`${data.text}`)}
                     </Link>
                   </View>
                   <View className="h-.5 w-full border border-black border-dashed mt-1"></View>
@@ -108,7 +110,7 @@ const index = () => {
                     className="w-full"
                   >
                     <Text className=" flex items-center text-2xl font-light">
-                      Çıkış Yap
+                      {t("profile.exit")}
                     </Text>
                   </Pressable>
                 </View>

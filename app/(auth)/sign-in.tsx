@@ -7,7 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import images from "@/constants/images";
 import Checkbox from "expo-checkbox";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,7 +35,6 @@ const showAlert = () => {
     }
   );
 };
-
 export default function index() {
   const { authUser, loading } = useSelector((state) => state.auth);
   const [checked, setChecked] = useState(false);
@@ -63,8 +62,6 @@ export default function index() {
       dispatch(signInFailure(error.message));
     }
   };
-
-  console.log(loading);
 
   return (
     <SafeAreaView>
