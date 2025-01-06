@@ -36,7 +36,7 @@ const showAlert = () => {
   );
 };
 export default function index() {
-  const { authUser, loading } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
   const [checked, setChecked] = useState(false);
   const [signInData, setSignInData] = useState({
     username: "",
@@ -46,7 +46,6 @@ export default function index() {
 
   const handleSignIn = (e: any) => {
     dispatch(signInStart());
-    console.log(authUser);
     try {
       if (!checked) {
         dispatch(signInFailure("Şartlar kabul edilmedi"));
@@ -55,7 +54,6 @@ export default function index() {
       setTimeout(() => {
         dispatch(signInSuccess(signInData));
         router.replace("/(tabs)/home");
-        console.log(signInData, "anasayfaya yönlendir");
       }, 1000);
     } catch (error: any) {
       console.log(error.message);

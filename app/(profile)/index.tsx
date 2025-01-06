@@ -13,10 +13,11 @@ import { Image } from "expo-image";
 import LogoWithBackButton from "@/components/LogoWithBackButton";
 import Modal from "react-native-modal";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "@/context/hooks";
 
 const index = () => {
   const { t } = useTranslation();
-  const { authUser } = useSelector((state) => state.auth);
+  const { authUser } = useAppSelector((state) => state.auth);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const profileLinksData = [
@@ -38,7 +39,7 @@ const index = () => {
     },
     {
       text: "profile.notifications",
-      link: "about",
+      link: "notifications",
     },
     {
       text: "profile.saves",

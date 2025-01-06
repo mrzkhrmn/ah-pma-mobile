@@ -21,7 +21,7 @@ import Checkbox from "expo-checkbox";
 import { Toast } from "toastify-react-native";
 import { DatePickerModal } from "react-native-paper-dates";
 
-const OfferItem = ({ source }: { source: string }) => {
+const OfferItem = () => {
   return (
     <View
       style={[
@@ -56,6 +56,9 @@ const Offers = () => {
       source: images.noseOfferImage,
     },
   ]);
+  const [transferChecked, setTransferChecked] = useState(false);
+  const [landingChecked, setLandingChecked] = useState(false);
+  const [countOfPeople, setCountOfPeople] = useState(1);
   const [checked, setChecked] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [dropDownValue, setDropDownValue] = useState(null);
@@ -100,14 +103,27 @@ const Offers = () => {
   );
 
   const showToasts = () => {
-    Toast.success("Promised is resolved");
+    Toast.success("Teklifiniz başarılı bir şekilde gönderildi.");
+  };
+
+  const handleIncrement = () => {
+    setCountOfPeople(countOfPeople + 1);
+  };
+
+  const handleDecrement = () => {
+    if (countOfPeople < 2) {
+      setLandingChecked(false);
+      setCountOfPeople(1);
+      return;
+    }
+    setCountOfPeople(countOfPeople - 1);
   };
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View className="items-center">
-          <Image source={images.logoImage} style={{ width: 95, height: 50 }} />
+          <Image source={images.logoImage} style={{ width: 98, height: 50 }} />
         </View>
         <Text className="font-inter-medium text-xl text-center mt-4">
           TEKLİF İSTE
@@ -141,14 +157,29 @@ const Offers = () => {
           </Text>
           <TextInput className="border border-black/20 w-full py-1.5 px-2 rounded-lg bg-white" />
         </View>
-        <View className="items-center mt-6">
-          <Pressable>
-            <Text className="text-white bg-[#1d3587] px-6 py-3 font-inter-semibold rounded-lg">
-              + Operasyon Ekle
+        <View className="items-center mt-20">
+          <Pressable
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              paddingHorizontal: 10,
+              paddingVertical: 8,
+              borderRadius: 8,
+              backgroundColor: "#1d3587",
+              gap: 8,
+            }}
+          >
+            <Image
+              source={icons.noteAddIcon}
+              style={{ width: 24, height: 24 }}
+            />
+            <Text className="text-white bg-[#1d3587] font-inter-semibold rounded-lg">
+              Operasyon Ekle
             </Text>
           </Pressable>
         </View>
-        <View className="items-start px-4 mt-8">
+        <View className="items-center px-4 mt-8">
           <Pressable
             onPress={pickImage}
             style={{
@@ -164,10 +195,10 @@ const Offers = () => {
           >
             <Image
               source={icons.galleryAddIcon}
-              style={{ width: 42, height: 42 }}
+              style={{ width: 24, height: 24 }}
             />
             <Text className=" text-white font-inter-semibold text-center">
-              Fotoğraf {"\n"} Ekle
+              Fotoğraf Ekle
             </Text>
           </Pressable>
         </View>
@@ -176,9 +207,7 @@ const Offers = () => {
             contentContainerStyle={{ gap: 10 }}
             data={offerData}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={(data) => (
-              <OfferItem key={data.id} source={data.source} />
-            )}
+            renderItem={(data) => <OfferItem key={data.id} />}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
@@ -202,10 +231,10 @@ const Offers = () => {
 
         <View className="px-4">
           <Text className="text-lg font-inter-medium">Ek Talepler</Text>
-          <View className="flex flex-row gap-4 justify-center">
+          <View className="flex flex-row gap-4 justify-center duration-300">
             <View className="flex flex-row items-center gap-1 my-6">
               <Checkbox
-                onTouchStart={() => setChecked(!checked)}
+                onTouchStart={() => setTransferChecked(!transferChecked)}
                 style={{
                   borderWidth: 1,
                   borderRadius: 7,
@@ -214,13 +243,13 @@ const Offers = () => {
                 }}
                 color={"#00000053"}
                 className="rounded-lg border overflow-hidden"
-                value={checked}
+                value={transferChecked}
               />
               <Text className="text-[16px] ">Transfer</Text>
             </View>
             <View className="flex flex-row items-center gap-1   my-6">
               <Checkbox
-                onTouchStart={() => setChecked(!checked)}
+                onTouchStart={() => setLandingChecked(!landingChecked)}
                 style={{
                   borderWidth: 1,
                   borderRadius: 7,
@@ -229,30 +258,60 @@ const Offers = () => {
                 }}
                 color={"#00000053"}
                 className="rounded-lg border overflow-hidden"
-                value={checked}
+                value={landingChecked}
               />
               <Text className="text-[16px] ">Konaklama</Text>
             </View>
-            <View className="flex flex-row gap-1 items-center my-6">
-              <Checkbox
-                onTouchStart={() => setChecked(!checked)}
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 7,
-                  width: 20,
-                  height: 20,
-                }}
-                color={"#00000053"}
-                className="rounded-lg border overflow-hidden"
-                value={checked}
-              />
-              <Text className="text-[16px] ">Refakatçi</Text>
-            </View>
+            {landingChecked && (
+              <View
+                className={`flex flex-row items-center transition duration-300`}
+              >
+                <Pressable
+                  onPress={handleDecrement}
+                  style={{
+                    backgroundColor: "#1d3587",
+                    width: 24,
+                    height: 24,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 6,
+                  }}
+                >
+                  <Text className=" text-white  font-inter-bold   rounded-lg ">
+                    -
+                  </Text>
+                </Pressable>
+                <Text className="bg-white items-center h-[24px] text-center text-2xl px-4">
+                  {countOfPeople}
+                </Text>
+                <Pressable
+                  onPress={() => handleIncrement()}
+                  style={{
+                    backgroundColor: "#1d3587",
+                    width: 24,
+                    height: 24,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 6,
+                  }}
+                >
+                  <Text className=" text-white  font-inter-bold   rounded-lg ">
+                    +
+                  </Text>
+                </Pressable>
+              </View>
+            )}
           </View>
         </View>
         <View className=" flex items-center w-full px-10 mt-4">
           <DatePickerModal
-            locale="en"
+            saveLabel="Kaydet"
+            startLabel="Başlangiç"
+            endLabel="Bitiş"
+            label="Tarih aralığı seçin"
+            locale="tr"
             mode="range"
             visible={open}
             onDismiss={onDismiss}
@@ -265,14 +324,14 @@ const Offers = () => {
             onPress={() => setOpen(true)}
           >
             <Text className="text-start self-start font-inter-medium">
-              Tarih Aralığı Seçiniz
+              Uygun Tarih Aralığı Seçiniz
             </Text>
           </TouchableOpacity>
         </View>
         <View className="items-center my-6">
           <Pressable onPress={showToasts}>
             <Text className="text-white bg-[#1d3587] px-6 py-3 font-inter-semibold rounded-lg">
-              + Operasyon Ekle
+              Teklif İste
             </Text>
           </Pressable>
         </View>

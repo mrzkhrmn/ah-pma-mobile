@@ -1,8 +1,12 @@
-import { View, Text, Pressable, Keyboard, Image } from "react-native";
-import React from "react";
-import icons from "@/constants/icons";
-import images from "@/constants/images";
-import { router } from "expo-router";
+import {
+  View,
+  Text,
+  Pressable,
+  Keyboard,
+  Image,
+  StyleSheet,
+} from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   TextInput,
@@ -10,12 +14,25 @@ import {
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import LogoWithBackButton from "@/components/LogoWithBackButton";
+import { Dropdown } from "react-native-element-dropdown";
 
 const Info = () => {
+  const [genderDropdownValue, setGenderDropdownValue] = useState(null);
+  const [countryDropdownValue, setCountryDropdownValue] = useState(null);
+
+  const genderData = [
+    { value: "erkek", label: "Erkek" },
+    { value: "kadın", label: "Kadın" },
+  ];
+  const countryData = [
+    { value: "türkiye", label: "Türkiye" },
+    { value: "amerika", label: "Amerika" },
+  ];
+
   return (
     <SafeAreaView className="">
       <LogoWithBackButton />
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View>
         <Text className="text-2xl text-center font-semibold my-4">
           Bilgilerim
         </Text>
@@ -48,6 +65,38 @@ const Info = () => {
               className="border border-black/20 w-full py-1.5 px-2 rounded-lg bg-white"
             />
           </View>
+          <View>
+            <Dropdown
+              style={styles.dropdown}
+              inputSearchStyle={styles.dropdown}
+              selectedTextStyle={styles.dropdown}
+              placeholderStyle={styles.dropdown}
+              data={genderData}
+              labelField={"label"}
+              valueField={"value"}
+              placeholder="Cinsiyet"
+              value={genderDropdownValue}
+              onChange={(item) => {
+                setGenderDropdownValue(item.value);
+              }}
+            />
+          </View>
+          <View>
+            <Dropdown
+              style={styles.dropdown}
+              inputSearchStyle={styles.dropdown}
+              selectedTextStyle={styles.dropdown}
+              placeholderStyle={styles.dropdown}
+              data={countryData}
+              labelField={"label"}
+              valueField={"value"}
+              placeholder="Country"
+              value={countryDropdownValue}
+              onChange={(item) => {
+                setCountryDropdownValue(item.value);
+              }}
+            />
+          </View>
           <View className=" flex items-center w-full">
             <Text className="text-start self-start">Şehir</Text>
             <TextInput
@@ -77,9 +126,22 @@ const Info = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  dropdown: {
+    paddingVertical: 4,
+    borderRadius: 8,
+    backgroundColor: "white",
+    borderColor: "black",
+    borderStyle: "solid",
+    paddingHorizontal: 10,
+    width: 235,
+    fontSize: 14,
+  },
+});
 
 export default Info;

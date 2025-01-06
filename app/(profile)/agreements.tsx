@@ -12,7 +12,6 @@ import LogoWithBackButton from "@/components/LogoWithBackButton";
 const Agreements = () => {
   const { agreements } = useSelector((state) => state.auth);
   console.log(agreements);
-
   return (
     <SafeAreaView>
       <LogoWithBackButton />

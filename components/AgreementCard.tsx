@@ -1,7 +1,6 @@
 import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import icons from "@/constants/icons";
-import images from "@/constants/images";
 import { useDispatch, useSelector } from "react-redux";
 
 const AgreementCard = ({ item }: { item: any }) => {
