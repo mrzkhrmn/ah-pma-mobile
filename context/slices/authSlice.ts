@@ -8,6 +8,7 @@ interface initialStateProps {
     | undefined;
   agreements: { id: number; title: string; text: string }[] | null | undefined;
   notifications: { id: number; date: string; content: string }[];
+  offers: { id: number; date: string; operation: string; status: string }[];
   loading: boolean;
   error: string | null;
 }
@@ -15,6 +16,33 @@ interface initialStateProps {
 const initialState: initialStateProps = {
   authUser: null,
   savedOperations: [],
+  offers: [
+    {
+      id: 3633392,
+      date: "15 Aralık 2024",
+      operation:
+        "Deviasyon (Septum Eğriliği) Ameliyatı, Revizyon Burun Cerrahisi.",
+      status: "confirmed",
+    },
+    {
+      id: 3633393,
+      date: "19 Aralık 2024",
+      operation: "Karın Gerdirme",
+      status: "pending",
+    },
+    {
+      id: 3633394,
+      date: "21 Aralık 2024",
+      operation: "Karın Gerdirme",
+      status: "declined",
+    },
+    {
+      id: 3633395,
+      date: "25 Aralık 2024",
+      operation: "Burun Açma",
+      status: "confirmed",
+    },
+  ],
   agreements: [
     {
       id: 1,
@@ -207,6 +235,7 @@ const authSlice = createSlice({
         (notification) => notification.id !== action.payload.id
       );
     },
+    reset: () => initialState,
   },
 });
 
@@ -223,9 +252,9 @@ export const {
   addAgreementStart,
   addAgreementSuccess,
   addAgreementFailure,
-  setLanguage,
   deleteNotification,
   addNotification,
+  reset,
 } = authSlice.actions;
 
 export default authSlice.reducer;

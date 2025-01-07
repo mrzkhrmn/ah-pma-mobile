@@ -66,7 +66,6 @@ const index = () => {
     try {
       dispatch(logoutSuccess());
       router.replace("/sign-in");
-      console.log("Logged out");
     } catch (error: any) {
       dispatch(logoutFailure(error.message));
       console.log(error.message);
