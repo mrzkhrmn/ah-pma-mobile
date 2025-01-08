@@ -4,6 +4,7 @@ import images from "@/constants/images";
 import { router } from "expo-router";
 import HomeCard from "@/components/HomeCard";
 import { Image } from "expo-image";
+import { useAppSelector } from "@/context/hooks";
 
 export default function Home() {
   const itemData = [

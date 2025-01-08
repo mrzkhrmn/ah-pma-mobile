@@ -10,31 +10,17 @@ import { Toast } from "toastify-react-native";
 import { DatePickerModal } from "react-native-paper-dates";
 import OfferItem from "@/components/OfferItem";
 import OperationItem from "./OperationItem";
+import { useAppSelector } from "@/context/hooks";
+import { useDispatch } from "react-redux";
+import { requestOfferSuccess } from "@/context/slices/authSlice";
 
 const RequestOffer = ({ setOpenNewRequest }: any) => {
-  const [requestedOffers, setRequestedOffers] = useState([
-    {
-      id: 1,
-      source: images.noseOfferImage,
-    },
-    {
-      id: 2,
-      source: images.noseOfferImage,
-    },
-    {
-      id: 3,
-      source: images.noseOfferImage,
-    },
-  ]);
-  const [requestedOperationsCount, setRequestedOperationsCount] = useState(1);
-  const [transferChecked, setTransferChecked] = useState(false);
-  const [landingChecked, setLandingChecked] = useState(false);
-  const [countOfPeople, setCountOfPeople] = useState(1);
-  const [checked, setChecked] = useState(false);
+  const { offers } = useAppSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const hospitalOperationsDropdownData = [
     {
       id: 1,
-      value: "deviasyon",
+      value: "Deviasyon (Septum Eğriliği) Ameliyatı",
       label: "Deviasyon (Septum Eğriliği) Ameliyatı",
       questions: [
         "Deviasyon (Septum Eğriliği) Ameliyat Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -42,7 +28,7 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     },
     {
       id: 2,
-      value: "revizyonBurun",
+      value: "Revizyon Burun Cerrahisi",
       label: "Revizyon Burun Cerrahisi",
       questions: [
         "Revizyon Burun Cerrahisi Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -50,7 +36,7 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     },
     {
       id: 3,
-      value: "kasEstetigi",
+      value: "Kaş Estetiği",
       label: "Kaş Estetiği",
       questions: [
         "Kaş Estetiği Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -58,7 +44,7 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     },
     {
       id: 4,
-      value: "karinGerdirme",
+      value: "Karın Gerdirme",
       label: "Karın Gerdirme",
       questions: [
         "Karın Gerdirme Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -66,12 +52,25 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
       ],
     },
   ];
+  const [newOfferData, setNewOfferData] = useState({
+    id: offers[offers.length - 1].id + 1,
+    newOperations: [],
+    operationImages: [],
+    additional: { transfer: false, peopleCount: 1 },
+    date: { startDate: "", endDate: "" },
+    status: "pending",
+  });
+  const [transferChecked, setTransferChecked] = useState(false);
+  const [landingChecked, setLandingChecked] = useState(false);
+  const [countOfPeople, setCountOfPeople] = useState(1);
+  const [checked, setChecked] = useState(false);
+
   const [requestedOperations, setRequestedOperations] = useState([
-    hospitalOperationsDropdownData[0], // İlk operasyon
+    hospitalOperationsDropdownData[0],
   ]);
 
   const [hiddenOperations, setHiddenOperations] = useState(
-    hospitalOperationsDropdownData.slice(1) // Geri kalan operasyonlar
+    hospitalOperationsDropdownData.slice(1)
   );
 
   const [image, setImage] = useState<string | null>(null);
@@ -90,10 +89,15 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setNewOfferData({
+        ...newOfferData,
+        operationImages: [
+          ...newOfferData.operationImages,
+          result.assets[0].uri,
+        ],
+      });
     }
   };
 
@@ -101,42 +105,64 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     setOpen(false);
   }, [setOpen]);
 
-  const onConfirm = React.useCallback(
-    ({ startDate, endDate }) => {
-      setOpen(false);
-      setRange({ startDate, endDate });
-    },
-    [setOpen, setRange]
-  );
+  const onConfirm = ({ startDate, endDate }) => {
+    setOpen(false);
+    setRange({ startDate, endDate });
+    setNewOfferData({
+      ...newOfferData,
+      date: { startDate: startDate, endDate: endDate },
+    });
 
-  const requestOffer = () => {
-    try {
-      Toast.success("Teklifiniz başarılı bir şekilde gönderildi.");
-      setOpenNewRequest(false);
-    } catch (error: any) {
-      console.log(error.message);
-    }
+    [setOpen, setRange];
   };
 
   const handleIncrement = () => {
     setCountOfPeople(countOfPeople + 1);
+    setNewOfferData({
+      ...newOfferData,
+      additional: {
+        ...newOfferData.additional,
+        peopleCount: countOfPeople,
+      },
+    });
   };
 
   const handleDecrement = () => {
     if (countOfPeople < 2) {
       setLandingChecked(false);
       setCountOfPeople(1);
+      setNewOfferData({
+        ...newOfferData,
+        additional: {
+          ...newOfferData.additional,
+          peopleCount: 1,
+        },
+      });
       return;
     }
     setCountOfPeople(countOfPeople - 1);
+    setNewOfferData({
+      ...newOfferData,
+      additional: {
+        transfer: newOfferData.additional.transfer,
+        peopleCount: countOfPeople,
+      },
+    });
   };
 
   const handleAddOperation = () => {
     if (hiddenOperations.length > 0) {
-      const operationToShow = hiddenOperations[0]; // İlk gizli operasyon
-      setHiddenOperations(hiddenOperations.slice(1)); // Gizli listeden çıkar
-      setRequestedOperations((prev) => [...prev, operationToShow]); // Gösterilenlere ekle
+      const operationToShow = hiddenOperations[0];
+      setHiddenOperations(hiddenOperations.slice(1));
+      setRequestedOperations((prev) => [...prev, operationToShow]);
     }
+  };
+
+  const handleChangeDropdown = (operation) => {
+    setNewOfferData({
+      ...newOfferData,
+      newOperations: [...newOfferData.newOperations, operation],
+    });
   };
 
   const handleDeleteOperation = (id) => {
@@ -144,6 +170,14 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     const operationToHide = requestedOperations.find(
       (operation) => operation.id === id
     );
+
+    setNewOfferData({
+      ...newOfferData,
+      newOperations: newOfferData.newOperations.filter(
+        (opr) => opr !== operationToHide?.value
+      ),
+    });
+
     if (operationToHide) {
       // Silinen operasyonu requestedOperations'dan çıkar
       const updatedRequestedOperations = requestedOperations.filter(
@@ -157,6 +191,20 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
       setHiddenOperations(updatedHiddenOperations);
     }
   };
+
+  const handleRequestOffer = () => {
+    try {
+      console.log("Offer data: ", newOfferData);
+      dispatch(requestOfferSuccess(newOfferData));
+      Toast.success("Teklifiniz başarılı bir şekilde gönderildi.");
+      setOpenNewRequest(false);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  console.log(newOfferData);
+
   return (
     <ScrollView>
       <View className="pb-16">
@@ -166,9 +214,9 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
         {requestedOperations.map((data, index) => (
           <OperationItem
             handleDelete={handleDeleteOperation}
+            handleChangeDropdown={handleChangeDropdown}
             operation={data}
             key={index}
-            index={index}
             data={hospitalOperationsDropdownData}
           />
         ))}
@@ -222,16 +270,17 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
             </Text>
           </Pressable>
         </View>
-        <View className="px-4 mt-8">
-          <FlatList
-            contentContainerStyle={{ gap: 10 }}
-            data={requestedOffers}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={(data) => <OfferItem key={data.id} />}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
+        {newOfferData.operationImages.length > 0 && (
+          <View className="px-4 mt-8">
+            <FlatList
+              contentContainerStyle={{ gap: 10 }}
+              data={newOfferData.operationImages}
+              renderItem={({ item }) => <OfferItem key={item.id} item={item} />}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+        )}
         <View className="flex flex-row px-4 gap-2 my-6">
           <Checkbox
             onTouchStart={() => setChecked(!checked)}
@@ -254,7 +303,16 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
           <View className="flex flex-row gap-4 justify-center duration-300">
             <View className="flex flex-row items-center gap-1 my-6">
               <Checkbox
-                onTouchStart={() => setTransferChecked(!transferChecked)}
+                onTouchStart={() => {
+                  setTransferChecked((prev) => !prev);
+                  setNewOfferData({
+                    ...newOfferData,
+                    additional: {
+                      ...newOfferData.additional,
+                      transfer: transferChecked,
+                    },
+                  });
+                }}
                 style={{
                   borderWidth: 1,
                   borderRadius: 7,
@@ -269,7 +327,9 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
             </View>
             <View className="flex flex-row items-center gap-1   my-6">
               <Checkbox
-                onTouchStart={() => setLandingChecked(!landingChecked)}
+                onTouchStart={() => {
+                  setLandingChecked((prev) => !prev);
+                }}
                 style={{
                   borderWidth: 1,
                   borderRadius: 7,
@@ -349,7 +409,7 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
           </TouchableOpacity>
         </View>
         <View className="items-center my-6">
-          <Pressable onPress={requestOffer}>
+          <Pressable onPress={handleRequestOffer}>
             <Text className="text-white bg-[#1d3587] px-6 py-3 font-inter-semibold rounded-lg">
               Teklif İste
             </Text>

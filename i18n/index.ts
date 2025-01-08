@@ -4,6 +4,7 @@ import * as Localization from "expo-localization";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import translationEn from "./locales/en-US/translation.json";
 import translationTr from "./locales/tr-TR/translation.json";
+import Moment from "moment";
 
 const resources = {
   "en-US": { translation: translationEn },
@@ -11,6 +12,8 @@ const resources = {
 };
 
 const initI18n = async () => {
+  Moment.locale("tr");
+
   let savedLanguage = await AsyncStorage.getItem("language");
 
   if (!savedLanguage) {

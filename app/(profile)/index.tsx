@@ -8,6 +8,7 @@ import {
   logoutFailure,
   logoutStart,
   logoutSuccess,
+  reset,
 } from "@/context/slices/authSlice";
 import { Image } from "expo-image";
 import LogoWithBackButton from "@/components/LogoWithBackButton";
@@ -64,7 +65,8 @@ const index = () => {
   const handleLogout = () => {
     dispatch(logoutStart());
     try {
-      dispatch(logoutSuccess());
+      // dispatch(logoutSuccess());
+      dispatch(reset());
       router.replace("/sign-in");
     } catch (error: any) {
       dispatch(logoutFailure(error.message));

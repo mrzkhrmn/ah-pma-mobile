@@ -8,9 +8,13 @@ import {
 } from "react-native-gesture-handler";
 import { StyleSheet } from "react-native";
 
-const OperationItem = ({ data, index, handleDelete, operation }) => {
+const OperationItem = ({
+  data,
+  handleDelete,
+  operation,
+  handleChangeDropdown,
+}) => {
   const [dropDownValue, setDropDownValue] = useState(null);
-  console.log(dropDownValue);
 
   return (
     <View className=" border-b border-gray-300 py-2">
@@ -32,6 +36,7 @@ const OperationItem = ({ data, index, handleDelete, operation }) => {
           placeholder="Operason Seçimi"
           onChange={(item) => {
             setDropDownValue(item.value);
+            handleChangeDropdown(item.value);
           }}
         />
       </View>

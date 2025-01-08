@@ -2,7 +2,7 @@ import images from "@/constants/images";
 import { Image } from "expo-image";
 import { View } from "react-native";
 
-const OfferItem = () => {
+const OfferItem = ({ item }) => {
   return (
     <View
       style={[
@@ -15,8 +15,9 @@ const OfferItem = () => {
       ]}
     >
       <Image
-        source={images.noseOfferImage}
-        style={{ width: 255, height: 140, objectFit: "cover" }}
+        source={item}
+        style={{ width: 150, height: 150 }}
+        contentFit="cover"
       />
     </View>
   );

@@ -7,10 +7,7 @@ import LogoWithBackButton from "@/components/LogoWithBackButton";
 import { FlatList } from "react-native-gesture-handler";
 import { useAppSelector } from "@/context/hooks";
 import { useDispatch } from "react-redux";
-import {
-  addNotification,
-  deleteNotification,
-} from "@/context/slices/authSlice";
+import { deleteNotification } from "@/context/slices/authSlice";
 
 const NotificationCard = ({ item, onDelete }: { item: any; onDelete: any }) => {
   return (

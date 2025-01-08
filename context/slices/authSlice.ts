@@ -8,7 +8,14 @@ interface initialStateProps {
     | undefined;
   agreements: { id: number; title: string; text: string }[] | null | undefined;
   notifications: { id: number; date: string; content: string }[];
-  offers: { id: number; date: string; operation: string; status: string }[];
+  offers: {
+    id: number;
+    date: object;
+    additional: object;
+    newOperations: Array<string>;
+    operationImages: Array<string>;
+    status: string;
+  }[];
   loading: boolean;
   error: string | null;
 }
@@ -19,27 +26,49 @@ const initialState: initialStateProps = {
   offers: [
     {
       id: 3633392,
-      date: "15 Aralık 2024",
-      operation:
-        "Deviasyon (Septum Eğriliği) Ameliyatı, Revizyon Burun Cerrahisi.",
+      date: {
+        startDate: "2025-01-07T21:00:00.000Z",
+        endDate: "2025-01-10T23:59:59.999Z",
+      },
+      newOperations: [
+        "Deviasyon (Septum Eğriliği) Ameliyatı",
+        "Revizyon Burun Cerrahisi.",
+      ],
+      operationImages: ["asdsa"],
+      additional: { peopleCount: 1, layover: true },
       status: "confirmed",
     },
     {
       id: 3633393,
-      date: "19 Aralık 2024",
-      operation: "Karın Gerdirme",
+      date: {
+        startDate: "2025-01-07T21:00:00.000Z",
+        endDate: "2025-01-10T23:59:59.999Z",
+      },
+      newOperations: ["Karın Gerdirme"],
+      operationImages: ["asdsa"],
+      additional: { peopleCount: 1, layover: true },
       status: "pending",
     },
     {
       id: 3633394,
-      date: "21 Aralık 2024",
-      operation: "Karın Gerdirme",
+      date: {
+        startDate: "2025-01-07T21:00:00.000Z",
+        endDate: "2025-01-10T23:59:59.999Z",
+      },
+      newOperations: ["Karın Gerdirme"],
+      operationImages: ["asdsa"],
+      additional: { peopleCount: 1, layover: true },
       status: "declined",
     },
     {
       id: 3633395,
-      date: "25 Aralık 2024",
-      operation: "Burun Açma",
+      date: {
+        startDate: "2025-01-07T21:00:00.000Z",
+        endDate: "2025-01-10T23:59:59.999Z",
+      },
+      newOperations: ["Burun Açma"],
+      operationImages: ["asdsa"],
+      additional: { peopleCount: 1, layover: true },
       status: "confirmed",
     },
   ],
@@ -216,24 +245,47 @@ const authSlice = createSlice({
       const existingNotification = state.notifications?.find(
         (notification) => notification.id === action.payload.id
       );
-      if (existingNotification) {
-        state.notifications = state.notifications?.filter(
-          (notification) => notification.id !== existingNotification.id
-        );
-      } else {
+      // if (existingNotification) {
+      //   state.notifications = state.notifications?.filter(
+      //     (notification) => notification.id !== existingNotification.id
+      //   );
+      // }
+      if (!existingNotification) {
         state.notifications = [...(state.notifications || []), action.payload];
+        state.loading = false;
+        state.error = null;
       }
-      state.loading = false;
-      state.error = null;
     },
     deleteNotification: (
       state: initialStateProps,
       action: { payload: { id: number; date: string; content: string } }
     ) => {
-      console.log("aasdsda");
       state.notifications = state.notifications?.filter(
         (notification) => notification.id !== action.payload.id
       );
+    },
+    requestOfferStart: (state: initialStateProps) => {
+      state.loading = true;
+    },
+    requestOfferFailure: (state: initialStateProps) => {
+      state.loading = false;
+    },
+    requestOfferSuccess: (
+      state: initialStateProps,
+      action: {
+        payload: {
+          id: number;
+          newOperations: Array<string>;
+          date: object;
+          additional: object;
+          operationImages: Array<string>;
+          status: string;
+        };
+      }
+    ) => {
+      state.offers = [...state.offers, action.payload];
+      state.error = null;
+      state.loading = false;
     },
     reset: () => initialState,
   },
@@ -254,6 +306,9 @@ export const {
   addAgreementFailure,
   deleteNotification,
   addNotification,
+  requestOfferStart,
+  requestOfferSuccess,
+  requestOfferFailure,
   reset,
 } = authSlice.actions;
 
