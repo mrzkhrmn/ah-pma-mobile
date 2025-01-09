@@ -6,7 +6,7 @@ import RequestedOfferItem from "./RequestedOfferItem";
 import NewArrowIcon from "@/constants/NewArrowIcon";
 
 const RequestedOffers = ({ setOpenNewRequest }: any) => {
-  const { offers } = useAppSelector((state) => state.auth);
+  const { offers } = useAppSelector((state: any) => state.auth);
   return (
     <View className=" items-center h-full pb-36 ">
       <Text className="font-inter-medium text-xl text-center mt-4">

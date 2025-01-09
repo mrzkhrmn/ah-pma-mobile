@@ -8,19 +8,28 @@ import {
 } from "react-native-gesture-handler";
 import { StyleSheet } from "react-native";
 
+interface OperationItemProps {
+  data: any;
+  handleDelete: any;
+  operation: any;
+  handleChangeDropdown: any;
+  index: number;
+}
+
 const OperationItem = ({
   data,
   handleDelete,
   operation,
   handleChangeDropdown,
-}) => {
+  index,
+}: OperationItemProps) => {
   const [dropDownValue, setDropDownValue] = useState(null);
 
   return (
     <View className=" border-b border-gray-300 py-2">
       <View className="mx-auto mt-4">
         <View className="items-end px-4 ">
-          <Pressable onPress={() => handleDelete(operation.id)}>
+          <Pressable onPress={() => handleDelete(operation.id, index)}>
             <Text className="text-xl">X</Text>
           </Pressable>
         </View>
@@ -34,17 +43,17 @@ const OperationItem = ({
           valueField={"value"}
           value={dropDownValue}
           placeholder="Operason Seçimi"
-          onChange={(item) => {
+          onChange={(item: any) => {
             setDropDownValue(item.value);
-            handleChangeDropdown(item.value);
+            handleChangeDropdown(item.value, index);
           }}
         />
       </View>
       {data.map(
-        (d, index) =>
+        (d: any, index: number) =>
           d.value === dropDownValue && (
             <View key={index}>
-              {data[index].questions.map((question, i) => (
+              {data[index].questions.map((question: string, i: number) => (
                 <View key={i}>
                   <View className="px-10 mt-6 gap-1">
                     <Text className="font-inter-medium">Soru {i + 1}</Text>

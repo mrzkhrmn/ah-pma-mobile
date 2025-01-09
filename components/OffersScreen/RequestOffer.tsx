@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { requestOfferSuccess } from "@/context/slices/authSlice";
 
 const RequestOffer = ({ setOpenNewRequest }: any) => {
-  const { offers } = useAppSelector((state) => state.auth);
+  const { offers } = useAppSelector((state: any) => state.auth);
   const dispatch = useDispatch();
   const hospitalOperationsDropdownData = [
     {
@@ -105,7 +105,13 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     setOpen(false);
   }, [setOpen]);
 
-  const onConfirm = ({ startDate, endDate }) => {
+  const onConfirm = ({
+    startDate,
+    endDate,
+  }: {
+    startDate: any;
+    endDate: any;
+  }) => {
     setOpen(false);
     setRange({ startDate, endDate });
     setNewOfferData({
@@ -158,15 +164,18 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     }
   };
 
-  const handleChangeDropdown = (operation) => {
-    setNewOfferData({
-      ...newOfferData,
-      newOperations: [...newOfferData.newOperations, operation],
+  const handleChangeDropdown = (operation: any, index: number) => {
+    setNewOfferData((prevData) => {
+      const updatedOperations: any = [...prevData.newOperations];
+      updatedOperations[index] = operation;
+      return {
+        ...prevData,
+        newOperations: updatedOperations,
+      };
     });
   };
 
-  const handleDeleteOperation = (id) => {
-    // Silmek istediğimiz operasyonu buluyoruz
+  const handleDeleteOperation = (id: number, index: number) => {
     const operationToHide = requestedOperations.find(
       (operation) => operation.id === id
     );
@@ -179,16 +188,24 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     });
 
     if (operationToHide) {
-      // Silinen operasyonu requestedOperations'dan çıkar
       const updatedRequestedOperations = requestedOperations.filter(
         (operation) => operation.id !== id
       );
-      // Silinen operasyonu hiddenOperations listesine ekle
+
       const updatedHiddenOperations = [...hiddenOperations, operationToHide];
 
-      // Her iki listeyi de güncelliyoruz
       setRequestedOperations(updatedRequestedOperations);
       setHiddenOperations(updatedHiddenOperations);
+
+      setNewOfferData((prevData) => {
+        const updatedOperations = prevData.newOperations.filter(
+          (_, i) => i !== index
+        );
+        return {
+          ...prevData,
+          newOperations: updatedOperations,
+        };
+      });
     }
   };
 
@@ -217,6 +234,7 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
             handleChangeDropdown={handleChangeDropdown}
             operation={data}
             key={index}
+            index={index}
             data={hospitalOperationsDropdownData}
           />
         ))}
@@ -275,7 +293,9 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
             <FlatList
               contentContainerStyle={{ gap: 10 }}
               data={newOfferData.operationImages}
-              renderItem={({ item }) => <OfferItem key={item.id} item={item} />}
+              renderItem={({ item }: any) => (
+                <OfferItem key={item.id} item={item} />
+              )}
               horizontal
               showsHorizontalScrollIndicator={false}
             />

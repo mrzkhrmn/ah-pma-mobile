@@ -18,7 +18,7 @@ const RequestedOfferItem = ({ item }: any) => {
       </View>
       <View className=" mt-2">
         <Text className="font-inter-semibold mb-1">Operasyon:</Text>
-        {item.newOperations.map((operation, index) => (
+        {item.newOperations.map((operation: any, index: number) => (
           <Text key={index}>{operation}</Text>
         ))}
       </View>
