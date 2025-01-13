@@ -4,7 +4,7 @@ import InspectIcon from "@/constants/InspectIcon";
 import OfferPendingIcon from "@/constants/OfferPendingIcon";
 import Moment from "moment";
 
-const RequestedOfferItem = ({ item }: any) => {
+const RequestedOfferItem = ({ item, setSelectedOffer }: any) => {
   return (
     <View className="bg-white  px-3 py-2 mt-4 border border-gray-300 rounded-md">
       <View className="flex-row gap-10 justify-between items-center">
@@ -24,7 +24,10 @@ const RequestedOfferItem = ({ item }: any) => {
       </View>
       <View className="items-center mt-3 mb-2">
         {item.status === "confirmed" ? (
-          <Pressable className="flex-row  items-center border border-[#1d3587] rounded-md py-1 px-3 gap-1">
+          <Pressable
+            onPress={() => setSelectedOffer(item)}
+            className="flex-row  items-center border border-[#1d3587] rounded-md py-1 px-3 gap-1"
+          >
             <InspectIcon />
             <Text className="text-[#1d3587] font-inter-semibold">İncele</Text>
           </Pressable>

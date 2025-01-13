@@ -5,20 +5,27 @@ import { Image } from "expo-image";
 import { useAppSelector } from "@/context/hooks";
 import RequestOffer from "@/components/OffersScreen/RequestOffer";
 import RequestedOffers from "@/components/OffersScreen/RequestedOffers";
+import OfferDetail from "@/components/OffersScreen/OfferDetail";
 
 const Offers = () => {
-  const { offers } = useAppSelector((state) => state.auth);
+  const { offers } = useAppSelector((state: any) => state.auth);
   const [openNewRequest, setOpenNewRequest] = useState(false);
+  const [selectedOffer, setSelectedOffer] = useState<object | null>(null);
 
   return (
     <SafeAreaView>
-      <View className="items-center">
-        <Image source={images.logoImage} style={{ width: 98, height: 50 }} />
-      </View>
-      {openNewRequest || offers.length === 0 ? (
+      {selectedOffer ? (
+        <OfferDetail
+          selectedOffer={selectedOffer}
+          setSelectedOffer={setSelectedOffer}
+        />
+      ) : openNewRequest || offers.length === 0 ? (
         <RequestOffer setOpenNewRequest={setOpenNewRequest} />
       ) : (
-        <RequestedOffers setOpenNewRequest={setOpenNewRequest} />
+        <RequestedOffers
+          setSelectedOffer={setSelectedOffer}
+          setOpenNewRequest={setOpenNewRequest}
+        />
       )}
     </SafeAreaView>
   );

@@ -9,6 +9,7 @@ import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import ToastManager from "toastify-react-native";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -18,6 +19,7 @@ export default function RootLayout() {
     "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
     "Inter-SemiBold": require("../assets/fonts/Inter-SemiBold.ttf"),
   });
+  const nav = useNavigation();
 
   useEffect(() => {
     if (fontsLoaded) {
@@ -32,12 +34,14 @@ export default function RootLayout() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <GestureHandlerRootView>
-          <ToastManager
-            position="bottom"
-            animationIn={"slideInRight"}
-            animationOut={"slideOutLeft"}
-          />
-          <Stack screenOptions={{ headerShown: false }} />
+          <BottomSheetModalProvider>
+            <ToastManager
+              position="bottom"
+              animationIn={"slideInRight"}
+              animationOut={"slideOutLeft"}
+            />
+            <Stack screenOptions={{ headerShown: false }} />
+          </BottomSheetModalProvider>
         </GestureHandlerRootView>
       </PersistGate>
     </Provider>

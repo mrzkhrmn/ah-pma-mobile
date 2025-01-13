@@ -1,6 +1,5 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import images from "@/constants/images";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import React, { useRef, useState } from "react";
 import { FlatList, Pressable, ScrollView } from "react-native-gesture-handler";
 import icons from "@/constants/icons";
 import * as ImagePicker from "expo-image-picker";
@@ -13,10 +12,13 @@ import OperationItem from "./OperationItem";
 import { useAppSelector } from "@/context/hooks";
 import { useDispatch } from "react-redux";
 import { requestOfferSuccess } from "@/context/slices/authSlice";
+import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 
 const RequestOffer = ({ setOpenNewRequest }: any) => {
   const { offers } = useAppSelector((state: any) => state.auth);
   const dispatch = useDispatch();
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const hospitalOperationsDropdownData = [
     {
       id: 1,
@@ -81,9 +83,48 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
   const [open, setOpen] = React.useState(false);
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
+    if (isBottomSheetOpen) {
+      bottomSheetRef.current?.close(); // Eğer açık ise kapat
+    } else {
+      bottomSheetRef.current?.present(); // Eğer kapalı ise aç
+    }
+    setIsBottomSheetOpen(!isBottomSheetOpen); // Durumu tersine çevir
+  };
+
+  const pickImageFromGallery = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images", "videos"],
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      setNewOfferData({
+        ...newOfferData,
+        operationImages: [
+          ...newOfferData.operationImages,
+          result.assets[0].uri,
+        ],
+      });
+    }
+  };
+
+  const takePictureFromCamera = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert(
+        "İzin Gerekli",
+        "Kameraya erişmek için izin vermeniz gerekiyor."
+      );
+      return;
+    }
+
+    // Kamera açma
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -220,223 +261,272 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     }
   };
 
-  console.log(newOfferData);
-
   return (
-    <ScrollView>
-      <View className="pb-16">
-        <Text className="font-inter-medium text-xl text-center mt-4">
-          TEKLİF İSTE
-        </Text>
-        {requestedOperations.map((data, index) => (
-          <OperationItem
-            handleDelete={handleDeleteOperation}
-            handleChangeDropdown={handleChangeDropdown}
-            operation={data}
-            key={index}
-            index={index}
-            data={hospitalOperationsDropdownData}
-          />
-        ))}
-        {hiddenOperations.length > 0 && (
-          <View className="items-center px-4 mt-10">
+    <>
+      <BottomSheetModal ref={bottomSheetRef} style={styles.container}>
+        <BottomSheetView style={styles.contentContainer}>
+          <View className="flex-row gap-4">
             <Pressable
-              onPress={handleAddOperation}
+              onPress={takePictureFromCamera}
+              style={{
+                width: 120,
+                height: 80,
+                backgroundColor: "#1d3587",
+                paddingVertical: 8,
+                paddingHorizontal: 16,
+                borderRadius: 8,
+              }}
+            >
+              <Text className="text-white font-inter-bold text-xl text-center my-auto">
+                Kamera
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={pickImageFromGallery}
+              style={{
+                width: 120,
+                height: 80,
+                backgroundColor: "#1d3587",
+                paddingVertical: 8,
+                paddingHorizontal: 16,
+                borderRadius: 8,
+              }}
+            >
+              <Text className="text-white  text-center my-auto text-xl font-inter-bold">
+                Galeriden Seç
+              </Text>
+            </Pressable>
+          </View>
+        </BottomSheetView>
+      </BottomSheetModal>
+      <ScrollView>
+        <View className="pb-16">
+          <Text className="font-inter-medium text-xl text-center mt-4">
+            TEKLİF İSTE
+          </Text>
+          {requestedOperations.map((data, index) => (
+            <OperationItem
+              handleDelete={handleDeleteOperation}
+              handleChangeDropdown={handleChangeDropdown}
+              operation={data}
+              key={index}
+              index={index}
+              data={hospitalOperationsDropdownData}
+            />
+          ))}
+          {hiddenOperations.length > 0 && (
+            <View className="items-center px-4 mt-10">
+              <Pressable
+                onPress={handleAddOperation}
+                style={{
+                  width: 150,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingHorizontal: 10,
+                  paddingVertical: 8,
+                  borderRadius: 8,
+                  backgroundColor: "#1d3587",
+                  gap: 8,
+                }}
+              >
+                <Image
+                  source={icons.noteAddIcon}
+                  style={{ width: 24, height: 24 }}
+                />
+                <Text className="text-white bg-[#1d3587] font-inter-semibold rounded-lg">
+                  Operasyon Ekle
+                </Text>
+              </Pressable>
+            </View>
+          )}
+          <View className="items-center px-4 mt-8">
+            <Pressable
+              onPress={pickImage}
               style={{
                 width: 150,
+                backgroundColor: "#1d3587",
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
                 paddingHorizontal: 10,
                 paddingVertical: 8,
-                borderRadius: 8,
-                backgroundColor: "#1d3587",
-                gap: 8,
+                gap: 10,
+                borderRadius: 6,
               }}
             >
               <Image
-                source={icons.noteAddIcon}
+                source={icons.galleryAddIcon}
                 style={{ width: 24, height: 24 }}
               />
-              <Text className="text-white bg-[#1d3587] font-inter-semibold rounded-lg">
-                Operasyon Ekle
+              <Text className=" text-white font-inter-semibold text-center">
+                Fotoğraf Ekle
               </Text>
             </Pressable>
           </View>
-        )}
-        <View className="items-center px-4 mt-8">
-          <Pressable
-            onPress={pickImage}
-            style={{
-              width: 150,
-              backgroundColor: "#1d3587",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              paddingHorizontal: 10,
-              paddingVertical: 8,
-              gap: 10,
-              borderRadius: 6,
-            }}
-          >
-            <Image
-              source={icons.galleryAddIcon}
-              style={{ width: 24, height: 24 }}
+          {newOfferData.operationImages.length > 0 && (
+            <View className="px-4 mt-8">
+              <FlatList
+                contentContainerStyle={{ gap: 10 }}
+                data={newOfferData.operationImages}
+                renderItem={({ item }: any) => (
+                  <OfferItem key={item.id} item={item} />
+                )}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
+          )}
+          <View className="flex flex-row px-4 gap-2 my-6">
+            <Checkbox
+              onTouchStart={() => setChecked(!checked)}
+              style={{ borderWidth: 1, borderRadius: 7 }}
+              color={"#00000053"}
+              className="rounded-lg border overflow-hidden"
+              value={checked}
             />
-            <Text className=" text-white font-inter-semibold text-center">
-              Fotoğraf Ekle
+            <Text className="text-[14px] pr-6">
+              Teklif talep ederek{" "}
+              <Text className="text-[#1d3587]">
+                özel nitelikli kişisel veri açık rıza metnini
+              </Text>{" "}
+              ve okuyup onayladığımı kabul ederim.
             </Text>
-          </Pressable>
-        </View>
-        {newOfferData.operationImages.length > 0 && (
-          <View className="px-4 mt-8">
-            <FlatList
-              contentContainerStyle={{ gap: 10 }}
-              data={newOfferData.operationImages}
-              renderItem={({ item }: any) => (
-                <OfferItem key={item.id} item={item} />
-              )}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
           </View>
-        )}
-        <View className="flex flex-row px-4 gap-2 my-6">
-          <Checkbox
-            onTouchStart={() => setChecked(!checked)}
-            style={{ borderWidth: 1, borderRadius: 7 }}
-            color={"#00000053"}
-            className="rounded-lg border overflow-hidden"
-            value={checked}
-          />
-          <Text className="text-[14px] pr-6">
-            Teklif talep ederek{" "}
-            <Text className="text-[#1d3587]">
-              özel nitelikli kişisel veri açık rıza metnini
-            </Text>{" "}
-            ve okuyup onayladığımı kabul ederim.
-          </Text>
-        </View>
 
-        <View className="px-4">
-          <Text className="text-lg font-inter-medium">Ek Talepler</Text>
-          <View className="flex flex-row gap-4 justify-center duration-300">
-            <View className="flex flex-row items-center gap-1 my-6">
-              <Checkbox
-                onTouchStart={() => {
-                  setTransferChecked((prev) => !prev);
-                  setNewOfferData({
-                    ...newOfferData,
-                    additional: {
-                      ...newOfferData.additional,
-                      transfer: transferChecked,
-                    },
-                  });
-                }}
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 7,
-                  width: 20,
-                  height: 20,
-                }}
-                color={"#00000053"}
-                className="rounded-lg border overflow-hidden"
-                value={transferChecked}
-              />
-              <Text className="text-[16px] ">Transfer</Text>
-            </View>
-            <View className="flex flex-row items-center gap-1   my-6">
-              <Checkbox
-                onTouchStart={() => {
-                  setLandingChecked((prev) => !prev);
-                }}
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 7,
-                  width: 20,
-                  height: 20,
-                }}
-                color={"#00000053"}
-                className="rounded-lg border overflow-hidden"
-                value={landingChecked}
-              />
-              <Text className="text-[16px] ">Konaklama</Text>
-            </View>
-            {landingChecked && (
-              <View
-                className={`flex flex-row items-center transition duration-300`}
-              >
-                <Pressable
-                  onPress={handleDecrement}
-                  style={{
-                    backgroundColor: "#1d3587",
-                    width: 24,
-                    height: 24,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: 6,
+          <View className="px-4">
+            <Text className="text-lg font-inter-medium">Ek Talepler</Text>
+            <View className="flex flex-row gap-4 justify-center duration-300">
+              <View className="flex flex-row items-center gap-1 my-6">
+                <Checkbox
+                  onTouchStart={() => {
+                    setTransferChecked((prev) => !prev);
+                    setNewOfferData({
+                      ...newOfferData,
+                      additional: {
+                        ...newOfferData.additional,
+                        transfer: transferChecked,
+                      },
+                    });
                   }}
-                >
-                  <Text className=" text-white  font-inter-bold   rounded-lg ">
-                    -
-                  </Text>
-                </Pressable>
-                <Text className="bg-white items-center h-[24px] text-center text-2xl px-4">
-                  {countOfPeople}
-                </Text>
-                <Pressable
-                  onPress={() => handleIncrement()}
                   style={{
-                    backgroundColor: "#1d3587",
-                    width: 24,
-                    height: 24,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: 6,
+                    borderWidth: 1,
+                    borderRadius: 7,
+                    width: 20,
+                    height: 20,
                   }}
-                >
-                  <Text className=" text-white  font-inter-bold   rounded-lg ">
-                    +
-                  </Text>
-                </Pressable>
+                  color={"#00000053"}
+                  className="rounded-lg border overflow-hidden"
+                  value={transferChecked}
+                />
+                <Text className="text-[16px] ">Transfer</Text>
               </View>
-            )}
+              <View className="flex flex-row items-center gap-1   my-6">
+                <Checkbox
+                  onTouchStart={() => {
+                    setLandingChecked((prev) => !prev);
+                  }}
+                  style={{
+                    borderWidth: 1,
+                    borderRadius: 7,
+                    width: 20,
+                    height: 20,
+                  }}
+                  color={"#00000053"}
+                  className="rounded-lg border overflow-hidden"
+                  value={landingChecked}
+                />
+                <Text className="text-[16px] ">Konaklama</Text>
+              </View>
+              {landingChecked && (
+                <View
+                  className={`flex flex-row items-center transition duration-300`}
+                >
+                  <Pressable
+                    onPress={handleDecrement}
+                    style={{
+                      backgroundColor: "#1d3587",
+                      width: 24,
+                      height: 24,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: 6,
+                    }}
+                  >
+                    <Text className=" text-white  font-inter-bold   rounded-lg ">
+                      -
+                    </Text>
+                  </Pressable>
+                  <Text className="bg-white items-center h-[24px] text-center text-2xl px-4">
+                    {countOfPeople}
+                  </Text>
+                  <Pressable
+                    onPress={() => handleIncrement()}
+                    style={{
+                      backgroundColor: "#1d3587",
+                      width: 24,
+                      height: 24,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: 6,
+                    }}
+                  >
+                    <Text className=" text-white  font-inter-bold   rounded-lg ">
+                      +
+                    </Text>
+                  </Pressable>
+                </View>
+              )}
+            </View>
+          </View>
+          <View className=" flex items-center w-full px-10 mt-4">
+            <DatePickerModal
+              saveLabel="Kaydet"
+              startLabel="Başlangiç"
+              endLabel="Bitiş"
+              label="Tarih aralığı seçin"
+              locale="tr"
+              mode="range"
+              visible={open}
+              onDismiss={onDismiss}
+              startDate={range.startDate}
+              endDate={range.endDate}
+              onConfirm={onConfirm}
+            />
+            <TouchableOpacity
+              className="bg-white px-4 py-2 rounded-lg"
+              onPress={() => setOpen(true)}
+            >
+              <Text className="text-start self-start font-inter-medium">
+                Uygun Tarih Aralığı Seçiniz
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View className="items-center my-6">
+            <Pressable onPress={handleRequestOffer}>
+              <Text className="text-white bg-[#1d3587] px-6 py-3 font-inter-semibold rounded-lg">
+                Teklif İste
+              </Text>
+            </Pressable>
           </View>
         </View>
-        <View className=" flex items-center w-full px-10 mt-4">
-          <DatePickerModal
-            saveLabel="Kaydet"
-            startLabel="Başlangiç"
-            endLabel="Bitiş"
-            label="Tarih aralığı seçin"
-            locale="tr"
-            mode="range"
-            visible={open}
-            onDismiss={onDismiss}
-            startDate={range.startDate}
-            endDate={range.endDate}
-            onConfirm={onConfirm}
-          />
-          <TouchableOpacity
-            className="bg-white px-4 py-2 rounded-lg"
-            onPress={() => setOpen(true)}
-          >
-            <Text className="text-start self-start font-inter-medium">
-              Uygun Tarih Aralığı Seçiniz
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View className="items-center my-6">
-          <Pressable onPress={handleRequestOffer}>
-            <Text className="text-white bg-[#1d3587] px-6 py-3 font-inter-semibold rounded-lg">
-              Teklif İste
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "grey",
+  },
+  contentContainer: {
+    flex: 1,
+    padding: 36,
+    alignItems: "center",
+  },
+});
 export default RequestOffer;

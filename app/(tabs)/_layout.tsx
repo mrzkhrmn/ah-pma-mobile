@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { Tabs } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 import icons from "@/constants/icons.js";
 import { Image } from "expo-image";
 import { useTranslation } from "react-i18next";
@@ -79,15 +79,12 @@ const TabsLayout = () => {
           title: "Operations",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <View className="flex items-center justify-center mt-2">
-              <View className="bg-[#1d3587] rounded-full flex items-center justify-center  h-10 w-10 mb-2">
-                <Image
-                  source={icons.operationsIcon}
-                  tintColor={"white"}
-                  style={{ width: 26, height: 26 }}
-                  contentFit="contain"
-                />
-              </View>
+            <View className="flex flex-col items-center justify-cente gap-1 mt-2.5">
+              <Image
+                source={icons.operationsIcon}
+                style={{ width: 32, height: 32 }}
+                contentFit="contain"
+              />
               <Text
                 className={`${
                   focused
@@ -108,7 +105,7 @@ const TabsLayout = () => {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              containerMargin="mt-[15px]"
+              containerMargin="mt-[12px]"
               focused={focused}
               icon={icons.chatInactiveIcon}
               title={t("tabs.chat")}
@@ -129,6 +126,12 @@ const TabsLayout = () => {
               title={t("tabs.dates")}
             />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="operations-detail"
+        options={{
+          href: null,
         }}
       />
     </Tabs>

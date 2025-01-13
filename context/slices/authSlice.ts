@@ -16,6 +16,14 @@ interface initialStateProps {
     operationImages: Array<string>;
     status: string;
   }[];
+  operations: {
+    id: number;
+    date: object;
+    additional: object;
+    newOperations: Array<string>;
+    operationImages: Array<string>;
+    status: string;
+  }[];
   loading: boolean;
   error: string | null;
 }
@@ -72,6 +80,7 @@ const initialState: initialStateProps = {
       status: "confirmed",
     },
   ],
+  operations: [],
   agreements: [
     {
       id: 1,
@@ -263,6 +272,30 @@ const authSlice = createSlice({
       state.notifications = state.notifications?.filter(
         (notification) => notification.id !== action.payload.id
       );
+    },
+    addOperationsStart: (state: initialStateProps) => {
+      state.loading = true;
+    },
+    addOperationsSuccess: (
+      state: initialStateProps,
+      action: {
+        payload: {
+          id: number;
+          date: object;
+          additional: object;
+          newOperations: Array<string>;
+          operationImages: Array<string>;
+          status: string;
+        };
+      }
+    ) => {
+      state.loading = false;
+      state.error = null;
+      state.operations = [...state.operations, action.payload];
+    },
+    addOperationsFailure: (state: initialStateProps, action: any) => {
+      state.loading = false;
+      state.error = action.payload;
     },
     requestOfferStart: (state: initialStateProps) => {
       state.loading = true;
