@@ -6,6 +6,7 @@ const OperationsLayout = () => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="general-info" />
+      <Stack.Screen name="questions" />
       <Stack.Screen name="tests" />
     </Stack>
   );

@@ -7,28 +7,30 @@ import ApproveIcon from "@/constants/ApproveIcon";
 import TrashIcon from "@/constants/TrashIcon";
 import { Pressable } from "react-native-gesture-handler";
 
-const Tests = () => {
-  const [tests, setTests] = useState([
-    { testName: "Tam kan sayımı", fileName: "Test1.jpg" },
-    { testName: "Koagülasyon testi", fileName: "" },
+const Papers = () => {
+  const [papers, setPapers] = useState([
+    { paperName: "Pasaport", fileName: "Passport1.jpg" },
+    { paperName: "Vize", fileName: "" },
   ]);
   return (
     <SafeAreaView>
       <LogoWithBackButton />
       <Text className="font-inter-semibold text-xl text-center mt-4 uppercase">
-        Testler
+        Evraklar
       </Text>
-      {tests.map((test, index) => (
+      {papers.map((paper, index) => (
         <View key={index} className="px-4 mt-4">
-          <Text className="text-lg font-inter-semibold">Tam kan sayımı:</Text>
-          {test.fileName ? (
+          <Text className="text-lg font-inter-semibold">
+            {paper.paperName}:
+          </Text>
+          {paper.fileName ? (
             <View className="bg-white border border-[#1d3587] rounded-lg py-1 px-4 mt-3 flex-row justify-between items-center">
               <View className="flex-row items-center gap-2">
                 <FileIcon />
                 <ApproveIcon />
               </View>
               <Text className="text-center pr-10 text-[#1d3587]">
-                {test.fileName}
+                {paper.fileName}
               </Text>
               <Pressable>
                 <TrashIcon />
@@ -38,7 +40,7 @@ const Tests = () => {
             <View className="bg-[#1d3587] rounded-lg mt-2">
               <Pressable>
                 <Text className="text-white text-center py-2 text-lg font-inter-semibold">
-                  Test Ekle
+                  Evrak Ekle
                 </Text>
               </Pressable>
             </View>
@@ -49,4 +51,4 @@ const Tests = () => {
   );
 };
 
-export default Tests;
+export default Papers;

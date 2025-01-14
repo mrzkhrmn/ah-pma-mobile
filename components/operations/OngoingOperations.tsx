@@ -35,10 +35,7 @@ const OngoingOperations = ({ setSelectedOperation }: any) => {
         startDate: "2025-01-07T21:00:00.000Z",
         endDate: "2025-01-10T23:59:59.999Z",
       },
-      newOperations: [
-        "Deviasyon (Septum Eğriliği) Ameliyatı",
-        "Revizyon Burun Cerrahisi.",
-      ],
+      newOperations: ["Deviasyon (Septum Eğriliği) Ameliyatı"],
       operationImages: ["asdsa"],
       additional: { peopleCount: 1, layover: true },
       status: "confirmed",

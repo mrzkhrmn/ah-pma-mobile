@@ -15,6 +15,7 @@ interface initialStateProps {
     newOperations: Array<string>;
     operationImages: Array<string>;
     status: string;
+    answers: Array<string>;
   }[];
   operations: {
     id: number;
@@ -38,6 +39,7 @@ const initialState: initialStateProps = {
         startDate: "2025-01-07T21:00:00.000Z",
         endDate: "2025-01-10T23:59:59.999Z",
       },
+      answers: ["Answer1", "Answer2", "Answer3"],
       newOperations: [
         "Deviasyon (Septum Eğriliği) Ameliyatı",
         "Revizyon Burun Cerrahisi.",
@@ -53,6 +55,7 @@ const initialState: initialStateProps = {
         endDate: "2025-01-10T23:59:59.999Z",
       },
       newOperations: ["Karın Gerdirme"],
+      answers: ["Answer1", "Answer2"],
       operationImages: ["asdsa"],
       additional: { peopleCount: 1, layover: true },
       status: "pending",
@@ -64,6 +67,7 @@ const initialState: initialStateProps = {
         endDate: "2025-01-10T23:59:59.999Z",
       },
       newOperations: ["Karın Gerdirme"],
+      answers: ["Answer1", "Answer2"],
       operationImages: ["asdsa"],
       additional: { peopleCount: 1, layover: true },
       status: "declined",
@@ -75,6 +79,7 @@ const initialState: initialStateProps = {
         endDate: "2025-01-10T23:59:59.999Z",
       },
       newOperations: ["Burun Açma"],
+      answers: ["Answer1"],
       operationImages: ["asdsa"],
       additional: { peopleCount: 1, layover: true },
       status: "confirmed",
@@ -312,6 +317,7 @@ const authSlice = createSlice({
           date: object;
           additional: object;
           operationImages: Array<string>;
+          answers: Array<string>;
           status: string;
         };
       }

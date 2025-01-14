@@ -77,7 +77,15 @@ const OperationDetail = ({
             <Text className=" text-xl text-[#1d3587]">Genel Bilgiler</Text>
           </Pressable>
           <View className="flex-row items-center justify-center gap-4">
-            <Pressable className="bg-white py-2 mt-4 items-center justify-center rounded-lg w-[120px] h-[100px] px-4 ">
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/operations-detail/questions",
+                  params: { operation: JSON.stringify(selectedOperation) },
+                })
+              }
+              className="bg-white py-2 mt-4 items-center justify-center rounded-lg w-[120px] h-[100px] px-4 "
+            >
               <QuestionsIcon />
               <Text className="text-center text-xl text-[#1d3587] mt-2">
                 Sorular
@@ -100,7 +108,15 @@ const OperationDetail = ({
             </Pressable>
           </View>
           <View className="flex-row items-center justify-center  gap-4">
-            <Pressable className="bg-white py-2 mt-4 items-center justify-center rounded-lg w-[120px] h-[100px] px-4">
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/operations-detail/papers",
+                  params: { operation: JSON.stringify(selectedOperation) },
+                })
+              }
+              className="bg-white py-2 mt-4 items-center justify-center rounded-lg w-[120px] h-[100px] px-4"
+            >
               <PapersIcon />
               <Text className="text-center text-xl text-[#1d3587] mt-2">
                 Evraklar
@@ -109,7 +125,15 @@ const OperationDetail = ({
                 Reddedildi
               </Text>
             </Pressable>
-            <Pressable className="bg-white py-2 mt-4 rounded-lg items-center justify-center w-[120px] h-[100px] px-4">
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/operations-detail/flight-details",
+                  params: { operation: JSON.stringify(selectedOperation) },
+                })
+              }
+              className="bg-white py-2 mt-4 rounded-lg items-center justify-center w-[120px] h-[100px] px-4"
+            >
               <WorldIcon />
               <Text className="text-center text-xl text-[#1d3587] mt-2">
                 Uçuş Detay
@@ -119,17 +143,41 @@ const OperationDetail = ({
               </Text>
             </Pressable>
           </View>
-          <Pressable className="bg-white flex-row items-center justify-center  gap-1 py-2 mt-4 rounded-lg">
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: "/operations-detail/layover",
+                params: { operation: JSON.stringify(selectedOperation) },
+              })
+            }
+            className="bg-white flex-row items-center justify-center  gap-1 py-2 mt-4 rounded-lg"
+          >
             <HomeIcon />
             <Text className="text-center text-xl text-[#1d3587]">
               Konaklama
             </Text>
           </Pressable>
-          <Pressable className="bg-white flex-row items-center justify-center gap-1 py-2 mt-4 rounded-lg">
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: "/operations-detail/transfer",
+                params: { operation: JSON.stringify(selectedOperation) },
+              })
+            }
+            className="bg-white flex-row items-center justify-center gap-1 py-2 mt-4 rounded-lg"
+          >
             <TransferIcon />
             <Text className="text-center text-xl text-[#1d3587]">Transfer</Text>
           </Pressable>
-          <Pressable className="bg-white flex-row items-center justify-center  gap-1 py-2 mt-4 rounded-lg">
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: "/operations-detail/important-subjects",
+                params: { operation: JSON.stringify(selectedOperation) },
+              })
+            }
+            className="bg-white flex-row items-center justify-center  gap-1 py-2 mt-4 rounded-lg"
+          >
             <ImportantIcon />
             <Text className="text-center text-xl text-[#1d3587]">
               Önemli Konular

@@ -57,6 +57,7 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
   const [newOfferData, setNewOfferData] = useState({
     id: offers[offers.length - 1].id + 1,
     newOperations: [],
+    answers: [],
     operationImages: [],
     additional: { transfer: false, peopleCount: 1 },
     date: { startDate: "", endDate: "" },
@@ -261,6 +262,17 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
     }
   };
 
+  const handleAnswerChange = (e: any, index: number) => {
+    setNewOfferData((prevData) => {
+      const updatedAnswers: any = [...prevData.answers];
+      updatedAnswers[index] = e;
+      return {
+        ...prevData,
+        answers: updatedAnswers,
+      };
+    });
+  };
+
   return (
     <>
       <BottomSheetModal ref={bottomSheetRef} style={styles.container}>
@@ -312,6 +324,7 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
               key={index}
               index={index}
               data={hospitalOperationsDropdownData}
+              onChange={handleAnswerChange}
             />
           ))}
           {hiddenOperations.length > 0 && (

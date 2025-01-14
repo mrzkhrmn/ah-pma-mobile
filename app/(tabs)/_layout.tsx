@@ -128,12 +128,6 @@ const TabsLayout = () => {
           ),
         }}
       />
-      <Tabs.Screen
-        name="operations-detail"
-        options={{
-          href: null,
-        }}
-      />
     </Tabs>
   );
 };

@@ -36,7 +36,7 @@ const showAlert = () => {
   );
 };
 export default function index() {
-  const { loading } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state: any) => state.auth);
   const [checked, setChecked] = useState(false);
   const [signInData, setSignInData] = useState({
     username: "",

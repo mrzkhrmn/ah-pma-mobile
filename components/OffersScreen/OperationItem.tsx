@@ -8,21 +8,21 @@ import {
 } from "react-native-gesture-handler";
 import { StyleSheet } from "react-native";
 
-interface OperationItemProps {
-  data: any;
-  handleDelete: any;
-  operation: any;
-  handleChangeDropdown: any;
-  index: number;
-}
-
 const OperationItem = ({
   data,
   handleDelete,
   operation,
   handleChangeDropdown,
   index,
-}: OperationItemProps) => {
+  onChange,
+}: {
+  data: any;
+  handleDelete: any;
+  operation: any;
+  handleChangeDropdown: any;
+  index: number;
+  onChange: any;
+}) => {
   const [dropDownValue, setDropDownValue] = useState(null);
 
   return (
@@ -69,6 +69,7 @@ const OperationItem = ({
                         placeholder="Cevap"
                         placeholderTextColor={"#00000050"}
                         className="border border-black/20 w-full py-2 px-2 rounded-lg bg-white"
+                        onChangeText={(e) => onChange(e, i)}
                       />
                     </View>
                   </TouchableWithoutFeedback>
