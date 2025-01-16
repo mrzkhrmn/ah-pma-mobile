@@ -190,7 +190,15 @@ const OperationDetail = ({
                 İletişim
               </Text>
             </Pressable>
-            <Pressable className="bg-white py-2 items-center justify-center mt-4 rounded-lg w-[120px] h-[100px] px-4">
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/operations-detail/payments",
+                  params: { operation: JSON.stringify(selectedOperation) },
+                })
+              }
+              className="bg-white py-2 items-center justify-center mt-4 rounded-lg w-[120px] h-[100px] px-4"
+            >
               <PaymentIcon />
               <Text className="text-center text-xl text-[#1d3587]">
                 Ödemeler

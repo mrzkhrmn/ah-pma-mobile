@@ -14,6 +14,7 @@ import noseOfferImage from "../assets/images/nose-offer.jpg";
 import doctorProile from "../assets/images/doctor-profile.png";
 import carImage from "../assets/images/car.png";
 import roomImage from "../assets/images/room.png";
+import driverImage from "../assets/images/driver.png";
 
 export default {
   backgroundImage,
@@ -32,4 +33,5 @@ export default {
   doctorProile,
   carImage,
   roomImage,
+  driverImage,
 };

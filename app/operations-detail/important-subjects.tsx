@@ -63,6 +63,16 @@ const ImportantSubject = () => {
           aperiam.
         </Text>
       </View>
+      <View className="justify-end items-end h-[400px] px-4">
+        <View className="gap-4">
+          <Pressable className="bg-white border border-[#1d3587] rounded-lg px-6 py-2">
+            <Text className="text-lg text-[#1d3587]">Paylaş</Text>
+          </Pressable>
+          <Pressable className="bg-white border border-[#1d3587] rounded-lg px-6 py-2">
+            <Text className="text-lg text-[#1d3587]">Yazdır</Text>
+          </Pressable>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };

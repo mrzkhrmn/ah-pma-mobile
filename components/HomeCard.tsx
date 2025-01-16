@@ -59,7 +59,7 @@ const HomeCard = ({ item }: { item: any }) => {
             </Pressable>
           </View>
         </View>
-        <Text className="text-[12px] text-inter mt-4">{item.text}</Text>
+        <Text className="text-[14px] mt-4">{item.text}</Text>
       </View>
     </View>
   );
