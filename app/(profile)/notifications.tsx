@@ -16,7 +16,7 @@ const NotificationCard = ({ item, onDelete }: { item: any; onDelete: any }) => {
         Tarih: <Text> {item.date}</Text>
       </Text>
       <Text className="my-2">Lorem:</Text>
-      <Text>{item.content}</Text>
+      <Text className="leading-6">{item.content}</Text>
       <View className="items-center">
         <Pressable
           onPress={onDelete}
@@ -33,7 +33,7 @@ const NotificationCard = ({ item, onDelete }: { item: any; onDelete: any }) => {
 };
 
 const Notifications = () => {
-  const { notifications } = useAppSelector((state) => state.auth);
+  const { notifications } = useAppSelector((state: any) => state.auth);
 
   const dispatch = useDispatch();
 

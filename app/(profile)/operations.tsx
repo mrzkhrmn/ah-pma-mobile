@@ -7,7 +7,7 @@ import images from "@/constants/images";
 import { Image } from "expo-image";
 
 const Operations = () => {
-  const [selectedOperation, setSelectedOperation] = useState(null);
+  const [selectedOperation, setSelectedOperation] = useState<any>(null);
   const [selectedOperationDetail, setSelectedOperationDetail] = useState(1);
   const operationsData = [
     {
@@ -48,7 +48,7 @@ const Operations = () => {
     },
   ];
 
-  const handlePressOperationDetail = (id) => {
+  const handlePressOperationDetail = (id : number) => {
     if (selectedOperationDetail === id) {
       return setSelectedOperationDetail(0);
     }
@@ -157,9 +157,11 @@ const Operations = () => {
                       </Text>
                     </View>
                   </View>
-                  <Text className="h-[1px] bg-black/10 w-full my-2"></Text>
+                  <Text className="h-[1px] bg-black/10 w-full mt-2"></Text>
                   {selectedOperationDetail === operationDetail.id && (
-                    <Text>{operationDetail.content}</Text>
+                    <Text className="leading-6 py-2">
+                      {operationDetail.content}
+                    </Text>
                   )}
                 </Pressable>
               ))}

@@ -10,7 +10,7 @@ import { FlatList } from "react-native-gesture-handler";
 import LogoWithBackButton from "@/components/LogoWithBackButton";
 
 const Agreements = () => {
-  const { agreements } = useSelector((state) => state.auth);
+  const { agreements } = useSelector((state: any) => state.auth);
   console.log(agreements);
   return (
     <SafeAreaView>

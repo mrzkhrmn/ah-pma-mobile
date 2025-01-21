@@ -10,10 +10,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import images from "@/constants/images";
 import InChatIcon from "@/constants/InChatIcon";
-import LogoWithBackButton from "@/components/LogoWithBackButton";
 import icons from "@/constants/icons";
 import ShareIcon from "@/constants/ShareIcon";
-import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 import SendIcon from "@/constants/SendIcon";
 import MessageItem from "@/components/MessageItem";
 
@@ -51,7 +50,7 @@ const Chat = () => {
     },
   ]);
 
-  const [selectedChat, setSelectedChat] = useState(null);
+  const [selectedChat, setSelectedChat] = useState<any>(null);
   return selectedChat === null ? (
     <SafeAreaView>
       <View className="items-center">

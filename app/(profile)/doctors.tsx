@@ -8,7 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import LogoWithBackButton from "@/components/LogoWithBackButton";
 import { router } from "expo-router";
 const Doctors = () => {
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [selectedDoctor, setSelectedDoctor] = useState<any>(null);
   const doctorsData = [
     {
       id: 1,
@@ -115,7 +115,7 @@ const Doctors = () => {
                 <Text className="text-[18px] font-semibold">
                   Prof. Dr. {selectedDoctor.name}
                 </Text>
-                <Text className=" text-[15px] max-w-full">
+                <Text className=" text-[15px] max-w-full leading-6">
                   1989’da İsatanbul Tıp Fakültesi Meme Hastalıkları Araştırma ve
                   Tedavi Derneği ve Ünitesi’nin kuruluşunda görev aldı Derneği
                   ve Ünitesi’nin kuruluşunda görev aldı.
@@ -123,7 +123,7 @@ const Doctors = () => {
               </View>
             </View>
             <View className="gap-5 flex justify w-full pl-2 py-2">
-              <Text className=" text-[15px] max-w-full">
+              <Text className=" text-[15px] max-w-full leading-7">
                 1989’dan bu yana her hafta yapılan ( 1350 toplantıdan fazla )
                 Meme Kanseri Konseyi toplantılarının organizasyonu ve
                 yürütmesinde görev aldı. 1994 ve 1995 yıllarında ABD’de Johns

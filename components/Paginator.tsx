@@ -5,8 +5,8 @@ import { Animated } from "react-native";
 const Paginator = ({ data, scrollX }: any) => {
   const { width } = useWindowDimensions();
   return (
-    <View className=" flex-row h-10 absolute bottom-8 left-36">
-      {data.map((_, i) => {
+    <View className=" flex-row h-10 absolute bottom-8 left-36 z-30">
+      {data.map((_: any, i: number) => {
         const inputRange = [(i - 1) * width, i * width, (i + 1) * width];
 
         const opacity = scrollX.interpolate({
@@ -18,7 +18,7 @@ const Paginator = ({ data, scrollX }: any) => {
           <Animated.View
             key={i.toString()}
             style={{ opacity }}
-            className="h-2 w-2 rounded-full border-black border bg-[#1d3587]  mx-2"
+            className="h-2 w-2 rounded-full border-black border bg-[#535353]  mx-2"
           />
         );
       })}

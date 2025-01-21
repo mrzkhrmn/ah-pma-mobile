@@ -9,7 +9,7 @@ import { Redirect, router } from "expo-router";
 import { useSelector } from "react-redux";
 
 const index = () => {
-  const { authUser } = useSelector((state) => state.auth);
+  const { authUser } = useSelector((state: any) => state.auth);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLastItem, setIsLastItem] = useState(false);
