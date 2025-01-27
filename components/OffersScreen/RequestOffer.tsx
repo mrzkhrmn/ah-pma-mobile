@@ -13,6 +13,9 @@ import { useAppSelector } from "@/context/hooks";
 import { useDispatch } from "react-redux";
 import { requestOfferSuccess } from "@/context/slices/authSlice";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import AddPhotoIcon from "@/constants/AddPhotoIcon";
+import AddOperationIcon from "@/constants/AddOperationIcon";
+import ConfirmIcon from "@/constants/ConfirmIcon";
 
 const RequestOffer = ({ setOpenNewRequest }: any) => {
   const { offers } = useAppSelector((state: any) => state.auth);
@@ -313,9 +316,22 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
       </BottomSheetModal>
       <ScrollView>
         <View className="pb-16">
-          <Text className="font-inter-medium text-xl text-center mt-4">
-            TEKLİF İSTE
-          </Text>
+          <View className=" items-center justify-center">
+            <View className="absolute left-6   p-3">
+              <Pressable
+                className="p-4"
+                onPress={() => setOpenNewRequest(false)}
+              >
+                <Image
+                  source={icons.backIcon}
+                  style={{ width: 18, height: 18 }}
+                />
+              </Pressable>
+            </View>
+            <Text className="text-center font-inter-medium mt-3 text-2xl">
+              Teklif İste
+            </Text>
+          </View>
           {requestedOperations.map((data, index) => (
             <OperationItem
               handleDelete={handleDeleteOperation}
@@ -343,10 +359,7 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
                   gap: 8,
                 }}
               >
-                <Image
-                  source={icons.noteAddIcon}
-                  style={{ width: 24, height: 24 }}
-                />
+                <AddOperationIcon />
                 <Text className="text-white bg-[#1d3587] font-inter-semibold rounded-lg">
                   Operasyon Ekle
                 </Text>
@@ -368,10 +381,7 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
                 borderRadius: 6,
               }}
             >
-              <Image
-                source={icons.galleryAddIcon}
-                style={{ width: 24, height: 24 }}
-              />
+              <AddPhotoIcon />
               <Text className=" text-white font-inter-semibold text-center">
                 Fotoğraf Ekle
               </Text>
@@ -518,8 +528,20 @@ const RequestOffer = ({ setOpenNewRequest }: any) => {
             </TouchableOpacity>
           </View>
           <View className="items-center my-6">
-            <Pressable onPress={handleRequestOffer}>
-              <Text className="text-white bg-[#1d3587] px-6 py-3 font-inter-semibold rounded-lg">
+            <Pressable
+              onPress={handleRequestOffer}
+              style={{
+                backgroundColor: "#1d3587",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 4,
+                paddingHorizontal: 14,
+                paddingVertical: 3,
+                borderRadius: 5,
+              }}
+            >
+              <ConfirmIcon />
+              <Text className="text-white  font-inter-semibold ">
                 Teklif İste
               </Text>
             </Pressable>

@@ -1,20 +1,21 @@
 import { Text, SafeAreaView, View, Pressable, ScrollView } from "react-native";
 import React, { useState } from "react";
-import { Link, Stack, router } from "expo-router";
-import images from "@/constants/images";
-import { useDispatch, useSelector } from "react-redux";
-import icons from "@/constants/icons";
-import {
-  logoutFailure,
-  logoutStart,
-  logoutSuccess,
-  reset,
-} from "@/context/slices/authSlice";
-import { Image } from "expo-image";
+import { Link, router } from "expo-router";
+import { useDispatch } from "react-redux";
+import { logoutFailure, logoutStart, reset } from "@/context/slices/authSlice";
 import LogoWithBackButton from "@/components/LogoWithBackButton";
 import Modal from "react-native-modal";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "@/context/hooks";
+import DoctorsIcon from "@/constants/DoctorsIcon";
+import OperationsIcon from "@/constants/OperationsIcon";
+import UserIcon from "@/constants/UserIcon";
+import NotificationsIcon from "@/constants/NotificationsIcon";
+import SaveIcon from "@/constants/SaveIcon";
+import AgreementsIcon from "@/constants/AgreementsIcon";
+import MailIcon from "@/constants/MailIcon";
+import SettingsIcon from "@/constants/SettingsIcon";
+import LogoutIcon from "@/constants/LogoutIcon";
 
 const index = () => {
   const { t } = useTranslation();
@@ -25,38 +26,47 @@ const index = () => {
     {
       text: "profile.about",
       link: "about",
+      icon: <DoctorsIcon />,
     },
     {
       text: "profile.doctors",
       link: "doctors",
+      icon: <DoctorsIcon />,
     },
     {
       text: "profile.operations",
       link: "operations",
+      icon: <OperationsIcon />,
     },
     {
       text: "profile.info",
       link: "info",
+      icon: <UserIcon />,
     },
     {
       text: "profile.notifications",
       link: "notifications",
+      icon: <NotificationsIcon />,
     },
     {
       text: "profile.saves",
       link: "saves",
+      icon: <SaveIcon />,
     },
     {
       text: "profile.agreements",
       link: "agreements",
+      icon: <AgreementsIcon />,
     },
     {
       text: "profile.contactInfo",
       link: "contact-info",
+      icon: <MailIcon />,
     },
     {
       text: "profile.settings",
       link: "settings",
+      icon: <SettingsIcon />,
     },
   ];
 
@@ -89,11 +99,8 @@ const index = () => {
             <View className="justify-start items-start w-full pl-5">
               {profileLinksData.map((data, index) => (
                 <View className="w-full" key={index}>
-                  <View className="flex-row items-center gap-4  mt-4 w-full border-dashed border-b  border-black/10">
-                    <Image
-                      source={icons.flterIcon}
-                      style={{ width: 20, height: 20 }}
-                    />
+                  <View className="flex-row items-center gap-2  mt-4 w-full border-dashed border-b  border-black/10">
+                    {data.icon}
                     <Link
                       href={`/${data.link}`}
                       className=" flex items-center text-2xl font-light w-full"
@@ -105,8 +112,8 @@ const index = () => {
                 </View>
               ))}
               <View className="w-full">
-                <View className="flex-row items-center gap-4  mt-4 w-full border-dashed border-b  border-black/10">
-                  <Image source={icons.flterIcon} className="w-5 h-5" />
+                <View className="flex-row items-center gap-2  mt-4 w-full border-dashed border-b  border-black/10">
+                  <LogoutIcon />
                   <Pressable
                     onPress={() => setIsModalVisible(true)}
                     className="w-full"

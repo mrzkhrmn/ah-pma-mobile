@@ -1,10 +1,7 @@
-import { View, Text, Pressable, Image } from "react-native";
-import React, { useState } from "react";
+import { View, Text } from "react-native";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import images from "@/constants/images";
-import icons from "@/constants/icons";
 import { useSelector } from "react-redux";
-import { router } from "expo-router";
 import AgreementCard from "@/components/AgreementCard";
 import { FlatList } from "react-native-gesture-handler";
 import LogoWithBackButton from "@/components/LogoWithBackButton";

@@ -31,10 +31,10 @@ const OperationsCard = ({ item, onSelect }: any) => {
           onPress={() => {
             onSelect(item);
           }}
-          className="flex-row items-center"
+          className="flex-row items-center border border-[#1d3587] px-2 py-1 rounded-md"
         >
           <InfoIcon />
-          <Text className="font-inter-semibold">Detaylar</Text>
+          <Text className="text-[#1d3587]">Detaylar</Text>
         </Pressable>
       </View>
     </View>

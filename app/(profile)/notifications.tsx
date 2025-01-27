@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Image } from "expo-image";
 import icons from "@/constants/icons";
 import { SafeAreaView } from "react-native-safe-area-context";

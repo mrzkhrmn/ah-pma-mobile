@@ -1,18 +1,7 @@
-import {
-  View,
-  Text,
-  Pressable,
-  Keyboard,
-  Image,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  TextInput,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import LogoWithBackButton from "@/components/LogoWithBackButton";
 import { Dropdown } from "react-native-element-dropdown";
 
@@ -76,7 +65,7 @@ const Info = () => {
               valueField={"value"}
               placeholder="Cinsiyet"
               value={genderDropdownValue}
-              onChange={(item) => {
+              onChange={(item: any) => {
                 setGenderDropdownValue(item.value);
               }}
             />
@@ -92,7 +81,7 @@ const Info = () => {
               valueField={"value"}
               placeholder="Country"
               value={countryDropdownValue}
-              onChange={(item) => {
+              onChange={(item: any) => {
                 setCountryDropdownValue(item.value);
               }}
             />

@@ -13,7 +13,7 @@ const MessageItem = ({ message }: MessageProps) => {
   return (
     <View
       className={`${
-        message.from === "me" ? "ml-4 bg-gray-500 " : "bg-white ml-0"
+        message.from === "me" ? "ml-4 bg-[#1d3587] " : "bg-white ml-0"
       } mt-4  p-2 rounded-lg w-[95%]`}
     >
       <Text

@@ -4,13 +4,10 @@ import { useSelector } from "react-redux";
 import { FlatList, Pressable } from "react-native-gesture-handler";
 import HomeCard from "@/components/HomeCard";
 import { SafeAreaView } from "react-native-safe-area-context";
-import icons from "@/constants/icons";
-import images from "@/constants/images";
-import { router } from "expo-router";
 import LogoWithBackButton from "@/components/LogoWithBackButton";
 
 const Saves = () => {
-  const { savedOperations } = useSelector((state) => state.auth);
+  const { savedOperations } = useSelector((state: any) => state.auth);
   return (
     <SafeAreaView>
       <LogoWithBackButton />

@@ -17,7 +17,7 @@ const Settings = () => {
     { id: 3, text: "settings.dateNotifications", isEnabled: false },
   ]);
 
-  const toggleSwitch = (id) => {
+  const toggleSwitch = (id: number) => {
     setSettingsData((prevSettings) =>
       prevSettings.map((setting) =>
         setting.id === id

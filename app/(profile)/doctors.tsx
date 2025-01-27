@@ -5,7 +5,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import { ScrollView } from "react-native-gesture-handler";
-import LogoWithBackButton from "@/components/LogoWithBackButton";
 import { router } from "expo-router";
 const Doctors = () => {
   const [selectedDoctor, setSelectedDoctor] = useState<any>(null);

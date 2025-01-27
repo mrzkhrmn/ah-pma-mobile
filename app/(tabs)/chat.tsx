@@ -5,6 +5,8 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
@@ -38,6 +40,36 @@ const Chat = () => {
     },
     {
       from: "me",
+      content:
+        "I had a smile with 24 veneers. Four days later Dr Ebru prepared my teeth and she put the veneers on. Now it looks amazing, I have a beautiful smile to go with my new look.",
+      date: "04.03.2021 - 15:00",
+    },
+    {
+      from: "Fatma Bölük",
+      content:
+        "I had a smile with 24 veneers. Four days later Dr Ebru prepared my teeth and she put the veneers on. Now it looks amazing, I have a beautiful smile to go with my new look.",
+      date: "04.03.2021 - 15:00",
+    },
+    {
+      from: "Fatma Bölük",
+      content:
+        "I had a smile with 24 veneers. Four days later Dr Ebru prepared my teeth and she put the veneers on. Now it looks amazing, I have a beautiful smile to go with my new look.",
+      date: "04.03.2021 - 15:00",
+    },
+    {
+      from: "Fatma Bölük",
+      content:
+        "I had a smile with 24 veneers. Four days later Dr Ebru prepared my teeth and she put the veneers on. Now it looks amazing, I have a beautiful smile to go with my new look.",
+      date: "04.03.2021 - 15:00",
+    },
+    {
+      from: "Fatma Bölük",
+      content:
+        "I had a smile with 24 veneers. Four days later Dr Ebru prepared my teeth and she put the veneers on. Now it looks amazing, I have a beautiful smile to go with my new look.",
+      date: "04.03.2021 - 15:00",
+    },
+    {
+      from: "Fatma Bölük",
       content:
         "I had a smile with 24 veneers. Four days later Dr Ebru prepared my teeth and she put the veneers on. Now it looks amazing, I have a beautiful smile to go with my new look.",
       date: "04.03.2021 - 15:00",
@@ -112,43 +144,39 @@ const Chat = () => {
           <Image source={images.logoImage} style={{ width: 95, height: 50 }} />
         </View>
       </View>
-      <View className="px-4 mt-4">
-        <View className="flex-row items-center gap-2">
-          <Image
-            style={{ width: 62, height: 62 }}
-            source={images.driverImage}
-            contentFit="cover"
-          />
-          <Text className="font-inter-semibold text-lg">
-            {selectedChat.name} - {selectedChat.title}
-          </Text>
-        </View>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          keyboardVerticalOffset={120}
+      <View className="px-4 mt-4 pb-10">
+        <KeyboardAwareScrollView
+          enableResetScrollToCoords={false}
+          extraScrollHeight={-80}
         >
-          <View className="h-full ">
-            <ScrollView>
-              {messageInfo.map((message, key) => (
-                <MessageItem key={key} message={message} />
-              ))}
-              <View className="px-4 flex-row gap-2 pb-48  mt-4">
-                <Pressable>
-                  <ShareIcon />
-                </Pressable>
-                <View className="flex-row items-center flex-1">
-                  <TextInput
-                    placeholder="Mesajınızı giriniz..."
-                    className="bg-white placeholder:text-gray-400 flex-1 px-4 py-4 "
-                  />
-                  <Pressable className="bg-[#1d3587] py-2 px-2 rounded-r-lg">
-                    <SendIcon />
-                  </Pressable>
-                </View>
-              </View>
-            </ScrollView>
+          <View className="flex-row items-center gap-2">
+            <Image
+              style={{ width: 62, height: 62 }}
+              source={images.driverImage}
+              contentFit="cover"
+            />
+            <Text className="font-inter-semibold text-lg">
+              {selectedChat.name} - {selectedChat.title}
+            </Text>
           </View>
-        </KeyboardAvoidingView>
+          {messageInfo.map((message, key) => (
+            <MessageItem key={key} message={message} />
+          ))}
+          <View className="px-4 flex-row gap-2   mt-4">
+            <Pressable>
+              <ShareIcon />
+            </Pressable>
+            <View className="flex-row items-center flex-1">
+              <TextInput
+                placeholder="Mesajınızı giriniz..."
+                className="bg-white placeholder:text-gray-400 flex-1 px-4 py-4 "
+              />
+              <Pressable className="bg-[#1d3587] py-2 px-2 rounded-r-lg">
+                <SendIcon />
+              </Pressable>
+            </View>
+          </View>
+        </KeyboardAwareScrollView>
       </View>
     </SafeAreaView>
   );

@@ -28,22 +28,18 @@ const RequestedOfferItem = ({ item, setSelectedOffer }: any) => {
             onPress={() => setSelectedOffer(item)}
             className="flex-row  items-center border border-[#1d3587] rounded-md py-1 px-3 gap-1"
           >
-            <InspectIcon />
-            <Text className="text-[#1d3587] font-inter-semibold">İncele</Text>
+            <InspectIcon color={"#1d3587"} />
+            <Text className="text-[#1d3587]">İncele</Text>
           </Pressable>
         ) : item.status === "pending" ? (
-          <Pressable className="flex-row  items-center border border-[#1d3587] rounded-md py-1 px-3 gap-1">
+          <Pressable className="flex-row  items-center border border-yellow-600 rounded-md py-1 px-3 gap-1">
             <OfferPendingIcon />
-            <Text className="text-[#1d3587] font-inter-semibold">
-              Teklif Bekliyor
-            </Text>
+            <Text className="text-yellow-600">Teklif Bekliyor</Text>
           </Pressable>
         ) : (
-          <Pressable className="flex-row  items-center border border-[#1d3587] rounded-md py-1 px-3 gap-1">
-            <InspectIcon />
-            <Text className="text-[#1d3587] font-inter-semibold">
-              Reddedildi
-            </Text>
+          <Pressable className="flex-row  items-center border border-red-600 rounded-md py-1 px-3 gap-1">
+            <InspectIcon color={"#dc2626"} />
+            <Text className="text-red-600">Reddedildi</Text>
           </Pressable>
         )}
       </View>
